@@ -1,6 +1,6 @@
 ﻿namespace ShipScript.Common
 {
-    public enum ScriptAccess
+    public enum ScriptAccessEnum
     {
         Full,
         ReadOnly,

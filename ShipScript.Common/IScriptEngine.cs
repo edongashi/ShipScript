@@ -2,17 +2,21 @@
 
 namespace ShipScript.Common
 {
-    public interface IScriptEngine : IDisposable
+    public interface IScriptEngine : IScriptEvaluator, IDisposable
     {
-        event EventHandler<CodeExecutionEventArgs> InteractiveCodeExecution;
+        event EventHandler<CodeExecutionEventArgs> ScriptExecuting;
 
-        event EventHandler<EngineExceptionEventArgs> InteractiveExecutionException;
+        event EventHandler<CodeExecutionEventArgs> CommandExecuting;
 
-        event EventHandler<CodeExecutionEventArgs> CodeExecution;
+        event EventHandler<CodeExecutionEventArgs> CommandExecuted;
 
-        event EventHandler<EngineExceptionEventArgs> ExecutionException;
+        event EventHandler<EngineExceptionEventArgs> ScriptExecutionException;
 
-        event EventHandler ScriptInterrupted;
+        event EventHandler<EngineExceptionEventArgs> CommandExecutionException;
+
+        event EventHandler ScriptExecutionInterrupted;
+
+        event EventHandler CommandExecutionInterrupted;
 
         event EventHandler Disposing;
 
@@ -30,21 +34,13 @@ namespace ShipScript.Common
 
         dynamic Script { get; }
 
-        ScriptAccess DefaultScriptAccess { get; set; }
+        ScriptAccessEnum DefaultScriptAccess { get; set; }
 
         Func<bool> ContinuationCallback { get; set; }
-        
-        string InteractiveExecuteCommand(string command);
 
-        void InteractiveExecute(string code);
-
-        object InteractiveEvaluate(string code);
+        void AddHostObject(string itemName, object target);
 
         string ExecuteCommand(string command);
-
-        void Execute(string code);
-
-        object Evaluate(string code);
 
         void Invoke(string funcName, params object[] args);
 
@@ -53,5 +49,9 @@ namespace ShipScript.Common
         string GetStackTrace();
 
         void CollectGarbage(bool exhaustive);
+
+        object CreateHostFunctions();
+
+        object CreateExtendedHostFunctions();
     }
 }

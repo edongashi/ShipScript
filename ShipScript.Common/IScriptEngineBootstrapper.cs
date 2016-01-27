@@ -6,10 +6,6 @@
 
         string Version { get; }
 
-        IScriptEngine ScriptEngine { get; }
-
-        void Bind(IScriptEngine engine, string[] args);
-
-        string Run();
+        string Run(IScriptEngine engine, string[] args);
     }
 }

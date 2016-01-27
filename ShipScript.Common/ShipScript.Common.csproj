@@ -51,8 +51,9 @@
     <Compile Include="IScriptEngineBootstrapper.cs" />
     <Compile Include="IScriptEngineExtension.cs" />
     <Compile Include="IScriptEngine.cs" />
+    <Compile Include="IScriptEvaluator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScriptAccess.cs" />
+    <Compile Include="ScriptAccessEnum.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

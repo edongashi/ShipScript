@@ -1,15 +1,14 @@
-﻿namespace ShipScript.Common
+﻿using System;
+
+namespace ShipScript.Common
 {
-    public class CodeExecutionEventArgs
+    public class CodeExecutionEventArgs : EventArgs
     {
-        public CodeExecutionEventArgs(string code, ExecutionMethod executionMethod)
+        public CodeExecutionEventArgs(string code)
         {
             Code = code;
-            ExecutionMethod = executionMethod;
         }
 
         public string Code { get; }
-        
-        public ExecutionMethod ExecutionMethod { get; }
     }
 }
