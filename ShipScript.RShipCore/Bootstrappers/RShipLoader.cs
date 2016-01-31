@@ -26,7 +26,14 @@ namespace ShipScript.RShipCore.Bootstrappers
             else if (args.Length == 1)
             {
                 var path = "/" + args[0];
-                core.Run(path);
+                try
+                {
+                    core.Run(path);
+                }
+                catch
+                {
+                    core.Sleep();
+                }
             }
             else if (args.Length > 1)
             {

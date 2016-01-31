@@ -28,7 +28,7 @@ namespace ShipScript.RShipCore
             CommandPipe = new CommandPipe(this);
 
             Compilers[".ship"] = Compilers[".js"] = new ScriptCompiler();
-            //Compilers[".json"] = new JsonCompiler();
+            Compilers[".json"] = new JsonCompiler();
             Compilers[".dll"] = new DllCompiler();
             coreModule = new NativeModule("core", loader, this);
             NativeModules["core"] = coreModule;
@@ -70,8 +70,9 @@ namespace ShipScript.RShipCore
             {
                 return loader.Load(request, null, true);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteErr(ex.Message);
                 Sleeping = true;
                 throw;
             }
@@ -101,7 +102,9 @@ namespace ShipScript.RShipCore
                             nativeWrite(prop);
                         }
                     }
-                    explore.toString = () => 'function explore() { [native code] }';
+                    var exploreToString = () => 'function explore() { [native code] }';
+                    Object.defineProperty(explore, 'toString', { value: exploreToString });
+                    Object.defineProperty(exploreToString, 'toString', { value: toString });
                     return explore;
                 }).valueOf()"))(new Action<object>(Console.WriteCore));
         }

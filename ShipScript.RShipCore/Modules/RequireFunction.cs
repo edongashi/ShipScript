@@ -46,10 +46,12 @@ namespace ShipScript.RShipCore
                     var require = id => hostRequire.invoke(id).exports;
                     var requireToString = () => 'function require() { [native code] }';
                     Object.defineProperty(require, 'toString', { value: requireToString });
+                    Object.defineProperty(requireToString, 'toString', { value: toString });
 
                     var resolve = () => hostRequire.resolve();
                     var resolveToString = () => 'function resolve() { [native code] }';
                     Object.defineProperty(resolve, 'toString', { value: resolveToString });
+                    Object.defineProperty(resolveToString, 'toString', { value: toString });
 
                     Object.defineProperty(require, 'resolve', { value: resolve, enumerable: true  });
                     Object.defineProperty(require, 'main', { get: () => hostRequire.main });

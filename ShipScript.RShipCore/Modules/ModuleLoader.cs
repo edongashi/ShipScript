@@ -65,7 +65,7 @@ namespace ShipScript.RShipCore
 
             if (identifier == null)
             {
-                throw new InvalidOperationException("Module not found.");
+                throw new InvalidOperationException($"Module not found '{request}'.");
             }
 
             if (LoadedModules.TryGetValue(identifier, out module))
@@ -85,7 +85,7 @@ namespace ShipScript.RShipCore
             IModuleCompiler compiler;
             if (!Compilers.TryGetValue(extension, out compiler))
             {
-                throw new InvalidOperationException("Invalid file extension.");
+                throw new InvalidOperationException($"Invalid file extension {extension}.");
             }
 
             LoadedModules[identifier] = module;

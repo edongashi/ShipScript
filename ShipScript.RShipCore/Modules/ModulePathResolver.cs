@@ -80,8 +80,8 @@ namespace ShipScript.RShipCore
         {
             if (!Directory.Exists(directory)) return null;
             return (from extension in Extensions
-                    let file = Path.Combine(directory, DefaultFileName)
-                    where File.Exists(file + extension)
+                    let file = Path.Combine(directory, DefaultFileName) + extension
+                    where File.Exists(file)
                     select Path.GetFullPath(file))
                     .FirstOrDefault();
         }
