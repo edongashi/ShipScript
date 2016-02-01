@@ -9,13 +9,14 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ShipScript.Common</RootNamespace>
     <AssemblyName>ShipScript.Common</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AssemblyInfoFilePath>Properties\AssemblyInfo.cs</AssemblyInfoFilePath>
     <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
     <UpdateAssemblyFileVersion>True</UpdateAssemblyFileVersion>
     <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
     <AssemblyFileVersionSettings>None.None.None.DateStamp</AssemblyFileVersionSettings>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,6 +50,7 @@
     <Compile Include="EngineExceptionEventArgs.cs" />
     <Compile Include="ExecutionMethod.cs" />
     <Compile Include="IScriptEngineBootstrapper.cs" />
+    <Compile Include="IScriptEngineException.cs" />
     <Compile Include="IScriptEngineExtension.cs" />
     <Compile Include="IScriptEngine.cs" />
     <Compile Include="IScriptEvaluator.cs" />

@@ -4,7 +4,11 @@
     {
         void Execute(string code);
 
+        void Execute(string documentName, string code);
+
         object Evaluate(string code);
+
+        object Evaluate(string documentName, string code);
 
         bool IsUndefined(object value);
 
