@@ -71,17 +71,25 @@ namespace ShipScript.RShipCore
                 return File.Exists(file) ? Path.GetFullPath(file) : null;
             }
 
-            return Extensions.Any(extension => File.Exists(file + extension)) 
-                ? Path.GetFullPath(file) 
-                : null;
+            // ReSharper disable once LoopCanBeConvertedToQuery
+            foreach (var extension in Extensions)
+            {
+                var filePath = file + extension;
+                if (File.Exists(filePath))
+                {
+                    return Path.GetFullPath(filePath);
+                }
+            }
+
+            return null;
         }
 
         private string SearchDirectory(string directory)
         {
             if (!Directory.Exists(directory)) return null;
             return (from extension in Extensions
-                    let file = Path.Combine(directory, DefaultFileName)
-                    where File.Exists(file + extension)
+                    let file = Path.Combine(directory, DefaultFileName) + extension
+                    where File.Exists(file)
                     select Path.GetFullPath(file))
                     .FirstOrDefault();
         }

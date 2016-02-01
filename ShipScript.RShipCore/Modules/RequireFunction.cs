@@ -41,18 +41,23 @@ namespace ShipScript.RShipCore
                 return function;
             }
 
-            function = ((dynamic)scriptEvaluator.Evaluate(@"
-                (function (hostRequire) { 
-                    var require = id => hostRequire.invoke(id).exports;
+            function = ((dynamic)scriptEvaluator.Evaluate("native", @"
+                (function (nativeRequire) { 
+                    function require(id) {
+                        var module = nativeRequire.invoke(id);
+                        return module.exports;
+                    }
                     var requireToString = () => 'function require() { [native code] }';
                     Object.defineProperty(require, 'toString', { value: requireToString });
+                    Object.defineProperty(requireToString, 'toString', { value: toString });
 
-                    var resolve = () => hostRequire.resolve();
+                    function resolve() { return nativeRequire.resolve(); }
                     var resolveToString = () => 'function resolve() { [native code] }';
                     Object.defineProperty(resolve, 'toString', { value: resolveToString });
+                    Object.defineProperty(resolveToString, 'toString', { value: toString });
 
                     Object.defineProperty(require, 'resolve', { value: resolve, enumerable: true  });
-                    Object.defineProperty(require, 'main', { get: () => hostRequire.main });
+                    Object.defineProperty(require, 'main', { get: () => nativeRequire.main, enumerable: true });
                     return require;
                 }).valueOf()"))(this);
             loaded = true;
@@ -61,8 +66,9 @@ namespace ShipScript.RShipCore
 
         private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
         {
-            {"Invoke", "invoke"},
-            {nameof(Resolve), "resolve"}
+            { nameof(Main), "main" },
+            { nameof(Invoke), "invoke" },
+            { nameof(Resolve), "resolve" }
         };
     }
 }

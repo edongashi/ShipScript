@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ShipScript.Common;
 using ShipScript.RShipCore.Compilers;
+using ShipScript.RShipCore.Helpers;
 
 namespace ShipScript.RShipCore
 {
@@ -28,7 +29,7 @@ namespace ShipScript.RShipCore
             CommandPipe = new CommandPipe(this);
 
             Compilers[".ship"] = Compilers[".js"] = new ScriptCompiler();
-            //Compilers[".json"] = new JsonCompiler();
+            Compilers[".json"] = new JsonCompiler();
             Compilers[".dll"] = new DllCompiler();
             coreModule = new NativeModule("core", loader, this);
             NativeModules["core"] = coreModule;
@@ -70,8 +71,9 @@ namespace ShipScript.RShipCore
             {
                 return loader.Load(request, null, true);
             }
-            catch
+            catch (Exception ex)
             {
+                PrintExceptionError(ex);
                 Sleeping = true;
                 throw;
             }
@@ -101,7 +103,9 @@ namespace ShipScript.RShipCore
                             nativeWrite(prop);
                         }
                     }
-                    explore.toString = () => 'function explore() { [native code] }';
+                    var exploreToString = () => 'function explore() { [native code] }';
+                    Object.defineProperty(explore, 'toString', { value: exploreToString });
+                    Object.defineProperty(exploreToString, 'toString', { value: toString });
                     return explore;
                 }).valueOf()"))(new Action<object>(Console.WriteCore));
         }
@@ -126,7 +130,7 @@ namespace ShipScript.RShipCore
             }
             catch (Exception ex)
             {
-                Console.WriteErr(ex.Message);
+                PrintExceptionError(ex);
             }
         }
 
@@ -140,6 +144,26 @@ namespace ShipScript.RShipCore
                 }})()");
         }
 
+        private void PrintExceptionError(Exception ex)
+        {
+            IScriptEngineException scriptException = null;
+            var testEx = ex;
+            while (testEx != null)
+            {
+                // ReSharper disable once SuspiciousTypeConversion.Global
+                var testScriptEx = testEx as IScriptEngineException;
+                if (testScriptEx != null)
+                {
+                    scriptException = testScriptEx;
+                }
+
+                testEx = testEx.InnerException;
+            }
+
+            Console.WriteErr(scriptException != null
+                ? StringHelpers.RemoveNativeLineNumbers(scriptException.ErrorDetails)
+                : ex.Message);
+        }
 
         private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>()
         {
