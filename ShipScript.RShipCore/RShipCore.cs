@@ -150,6 +150,7 @@ namespace ShipScript.RShipCore
             var testEx = ex;
             while (testEx != null)
             {
+                // ReSharper disable once SuspiciousTypeConversion.Global
                 var testScriptEx = testEx as IScriptEngineException;
                 if (testScriptEx != null)
                 {

@@ -57,7 +57,7 @@ namespace ShipScript.RShipCore
                     Object.defineProperty(resolveToString, 'toString', { value: toString });
 
                     Object.defineProperty(require, 'resolve', { value: resolve, enumerable: true  });
-                    Object.defineProperty(require, 'main', { get: () => nativeRequire.main });
+                    Object.defineProperty(require, 'main', { get: () => nativeRequire.main, enumerable: true });
                     return require;
                 }).valueOf()"))(this);
             loaded = true;
@@ -66,8 +66,9 @@ namespace ShipScript.RShipCore
 
         private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
         {
-            {"Invoke", "invoke"},
-            {nameof(Resolve), "resolve"}
+            { nameof(Main), "main" },
+            { nameof(Invoke), "invoke" },
+            { nameof(Resolve), "resolve" }
         };
     }
 }
