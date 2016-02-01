@@ -65,7 +65,7 @@ namespace ShipScript.RShipCore
 
             if (identifier == null)
             {
-                throw new InvalidOperationException($"Module not found '{request}'.");
+                throw new InvalidOperationException($"Module '{request}' not found.");
             }
 
             if (LoadedModules.TryGetValue(identifier, out module))

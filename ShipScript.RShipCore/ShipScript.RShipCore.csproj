@@ -48,6 +48,7 @@
     <Compile Include="Abstract\IScriptNativeObject.cs" />
     <Compile Include="Extensions\ScriptEvaluatorExtensions.cs" />
     <Compile Include="Helpers\PathHelpers.cs" />
+    <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Modules\Abstract\IModuleCompiler.cs" />
     <Compile Include="Modules\Abstract\IModuleLoader.cs" />
     <Compile Include="Modules\Abstract\IModuleLoaderFactory.cs" />

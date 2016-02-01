@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ShipScript.Common;
 using ShipScript.RShipCore.Compilers;
+using ShipScript.RShipCore.Helpers;
 
 namespace ShipScript.RShipCore
 {
@@ -72,7 +73,7 @@ namespace ShipScript.RShipCore
             }
             catch (Exception ex)
             {
-                Console.WriteErr(ex.Message);
+                PrintExceptionError(ex);
                 Sleeping = true;
                 throw;
             }
@@ -129,7 +130,7 @@ namespace ShipScript.RShipCore
             }
             catch (Exception ex)
             {
-                Console.WriteErr(ex.Message);
+                PrintExceptionError(ex);
             }
         }
 
@@ -143,6 +144,25 @@ namespace ShipScript.RShipCore
                 }})()");
         }
 
+        private void PrintExceptionError(Exception ex)
+        {
+            IScriptEngineException scriptException = null;
+            var testEx = ex;
+            while (testEx != null)
+            {
+                var testScriptEx = testEx as IScriptEngineException;
+                if (testScriptEx != null)
+                {
+                    scriptException = testScriptEx;
+                }
+
+                testEx = testEx.InnerException;
+            }
+
+            Console.WriteErr(scriptException != null
+                ? StringHelpers.RemoveNativeLineNumbers(scriptException.ErrorDetails)
+                : ex.Message);
+        }
 
         private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>()
         {
