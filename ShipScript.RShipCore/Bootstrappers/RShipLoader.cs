@@ -73,6 +73,7 @@ namespace ShipScript.RShipCore.Bootstrappers
 
         private void SetOutputs(RShipCore core)
         {
+            core.StdOut.Writer = new StandardOutputWriter();
             var console = core.Console;
             console.ConsoleReader = new StandardInputReader();
             console.CoreStream.Pipe(new StandardOutputStream(ConsoleColor.Cyan));

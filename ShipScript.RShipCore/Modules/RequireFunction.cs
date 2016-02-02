@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ShipScript.Common;
-using ShipScript.RShipCore.Extensions;
 
 namespace ShipScript.RShipCore
 {

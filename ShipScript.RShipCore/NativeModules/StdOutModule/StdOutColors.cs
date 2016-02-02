@@ -1,8 +1,8 @@
 ﻿namespace ShipScript.RShipCore.AbstractStdOut
 {
-    public class ColorScheme
+    public class StdOutColors
     {
-        public static readonly ColorScheme Instance = new ColorScheme();
+        public static readonly StdOutColors Instance = new StdOutColors();
 
         public int Black => 0;
 

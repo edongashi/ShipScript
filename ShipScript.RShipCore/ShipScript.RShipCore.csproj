@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Annotations\ModuleExports.cs" />
     <Compile Include="Annotations\NativeObjectHintAttribute.cs" />
     <Compile Include="Abstract\ICommandReceiver.cs" />
+    <Compile Include="Bootstrappers\StandardIO\StandardOutputWriter.cs" />
     <Compile Include="CommandPipe.cs" />
     <Compile Include="Abstract\IEventConnection.cs" />
     <Compile Include="Abstract\IEventSource.cs" />
@@ -71,9 +73,9 @@
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Annotations\NativeObjectAttribute.cs" />
     <Compile Include="Helpers\ObjectHelpers.cs" />
-    <Compile Include="NativeModules\AbstractStdOut\ColorScheme.cs" />
-    <Compile Include="NativeModules\AbstractStdOut\IStdOutWriter.cs" />
-    <Compile Include="NativeModules\AbstractStdOut\StdOut.cs" />
+    <Compile Include="NativeModules\StdOutModule\StdOutColors.cs" />
+    <Compile Include="NativeModules\StdOutModule\IStdOutWriter.cs" />
+    <Compile Include="NativeModules\StdOutModule\StdOut.cs" />
     <Compile Include="NativeModules\Reflect\Reflector.cs" />
     <Compile Include="NativeTypes\JArray.cs" />
     <Compile Include="NativeTypes\Promise.cs" />
@@ -87,7 +89,7 @@
     <Compile Include="NativeModules\Pipes\CancelToken.cs" />
     <Compile Include="NativeModules\Pipes\IgnoreToken.cs" />
     <Compile Include="NativeModules\Pipes\PipeableStream.cs" />
-    <Compile Include="VirtualConsole.cs" />
+    <Compile Include="NativeModules\ConsoleModule\VirtualConsole.cs" />
     <Compile Include="NativeModules\Pipes\Pipe.cs" />
     <Compile Include="Abstract\IConsoleInput.cs" />
     <Compile Include="NativeModules\Pipes\BaseReadableStream.cs" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ShipScript.Common;
 using ShipScript.RShipCore.Compilers;
+using ShipScript.RShipCore.ConsoleModule;
 using ShipScript.RShipCore.Extensions;
 using ShipScript.RShipCore.Helpers;
 
@@ -26,7 +27,10 @@ namespace ShipScript.RShipCore
             NativeModules = new Dictionary<string, Module>();
             Compilers = new Dictionary<string, IModuleCompiler>();
             loader = loaderFactory.Create(Evaluator, NativeModules, Compilers, pathResolver);
+
             Console = new VirtualConsole(null, Evaluator);
+            StdOut = new StdOut.StdOut();
+
             CommandPipe = new CommandPipe(this);
 
             Compilers[".ship"] = Compilers[".js"] = new ScriptCompiler();
@@ -54,7 +58,11 @@ namespace ShipScript.RShipCore
 
         public IScriptEvaluator Evaluator { get; }
 
+        [ModuleExports]
         public VirtualConsole Console { get; }
+
+        [ModuleExports]
+        public StdOut.StdOut StdOut { get; }
 
         public CommandPipe CommandPipe { get; }
 

@@ -1,12 +1,20 @@
 ﻿using System.Collections.Generic;
+using ShipScript.RShipCore.AbstractStdOut;
+using ShipScript.RShipCore.StdOutModule;
 
-namespace ShipScript.RShipCore.AbstractStdOut
+namespace ShipScript.RShipCore.StdOut
 {
     /// <summary>
     /// Serves as a module that proxies calls to an actual output.
     /// </summary>
+    [ModuleExports]
     public class StdOut : IStdOutWriter
     {
+        public StdOut()
+        {
+            
+        }
+
         public StdOut(IStdOutWriter writer)
         {
             Writer = writer;
@@ -14,7 +22,7 @@ namespace ShipScript.RShipCore.AbstractStdOut
 
         public IStdOutWriter Writer { get; set; }
 
-        public ColorScheme Colors { get; } = ColorScheme.Instance;
+        public StdOutColors Colors { get; } = StdOutColors.Instance;
 
         public void Write(string value)
         {
