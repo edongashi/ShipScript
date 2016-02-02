@@ -1,6 +1,4 @@
-﻿using ShipScript.RShipCore.Pipes;
-
-namespace ShipScript.RShipCore
+﻿namespace ShipScript.RShipCore.Pipes
 {
     public class CommandPipe : IWritableStream
     {

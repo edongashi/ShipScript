@@ -40,13 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Annotations\ModuleExports.cs" />
     <Compile Include="Annotations\NativeObjectHintAttribute.cs" />
     <Compile Include="Abstract\ICommandReceiver.cs" />
-    <Compile Include="CommandPipe.cs" />
+    <Compile Include="Bootstrappers\StandardIO\StandardErrorStream.cs" />
+    <Compile Include="Bootstrappers\StandardIO\StandardOutputWriter.cs" />
+    <Compile Include="Modules\ScriptModule.cs" />
+    <Compile Include="Modules\ScriptModulePath.cs" />
+    <Compile Include="NativeModules\Pipes\CommandPipe.cs" />
     <Compile Include="Abstract\IEventConnection.cs" />
     <Compile Include="Abstract\IEventSource.cs" />
     <Compile Include="Abstract\IScriptNativeObject.cs" />
     <Compile Include="Extensions\ScriptEvaluatorExtensions.cs" />
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Helpers\PathHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Modules\Abstract\IModuleCompiler.cs" />
@@ -70,6 +76,14 @@
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Annotations\NativeObjectAttribute.cs" />
     <Compile Include="Helpers\ObjectHelpers.cs" />
+    <Compile Include="ScriptModules.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScriptModules.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NativeModules\StdOut\StdOutColors.cs" />
+    <Compile Include="NativeModules\StdOut\IStdOutWriter.cs" />
+    <Compile Include="NativeModules\StdOut\StdOut.cs" />
     <Compile Include="NativeModules\Reflect\Reflector.cs" />
     <Compile Include="NativeTypes\JArray.cs" />
     <Compile Include="NativeTypes\Promise.cs" />
@@ -83,9 +97,9 @@
     <Compile Include="NativeModules\Pipes\CancelToken.cs" />
     <Compile Include="NativeModules\Pipes\IgnoreToken.cs" />
     <Compile Include="NativeModules\Pipes\PipeableStream.cs" />
-    <Compile Include="VirtualConsole.cs" />
+    <Compile Include="NativeModules\VirtualConsole\Console.cs" />
     <Compile Include="NativeModules\Pipes\Pipe.cs" />
-    <Compile Include="Abstract\IConsoleInput.cs" />
+    <Compile Include="NativeModules\VirtualConsole\IConsoleInput.cs" />
     <Compile Include="NativeModules\Pipes\BaseReadableStream.cs" />
     <Compile Include="NativeModules\Pipes\PipeBrokenException.cs" />
     <Compile Include="Bootstrappers\StandardIO\StandardInputReader.cs" />
@@ -105,7 +119,18 @@
       <Name>ShipScript.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="includes.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ScriptModules.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ScriptModules.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

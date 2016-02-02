@@ -4,13 +4,14 @@ using ShipScript.Common;
 using ShipScript.RShipCore.Pipes;
 using ShipScript.RShipCore.Pipes.TransferModel;
 
-namespace ShipScript.RShipCore
+namespace ShipScript.RShipCore.VirtualConsole
 {
-    public class VirtualConsole : ICompositeStream<IPipeableStream>
+    [ModuleExports]
+    public class Console : ICompositeStream<IPipeableStream>
     {
         private readonly IScriptEvaluator evaluator;
 
-        public VirtualConsole(IConsoleInput consoleReader, IScriptEvaluator evaluator)
+        public Console(IConsoleInput consoleReader, IScriptEvaluator evaluator)
         {
             this.evaluator = evaluator;
             ConsoleReader = consoleReader;
@@ -80,7 +81,7 @@ namespace ShipScript.RShipCore
 
         private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>()
         {
-            {nameof(WriteLog), "log"}
+            [nameof(WriteLog)] = "log"
         };
     }
 }

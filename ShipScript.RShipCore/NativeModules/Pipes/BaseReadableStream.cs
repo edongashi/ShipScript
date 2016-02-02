@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ShipScript.Common;
-using ShipScript.RShipCore.EventModel;
 using ShipScript.RShipCore.NativeTypes;
 
 namespace ShipScript.RShipCore.Pipes
@@ -133,7 +132,7 @@ namespace ShipScript.RShipCore.Pipes
 
         private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
         {
-            { nameof(Pipe), "pipe" },
+            [nameof(Pipe)] = "pipe"
         };
     }
 }

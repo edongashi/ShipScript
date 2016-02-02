@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using ShipScript.Common;
 using ShipScript.RShipCore.Compilers;
+using ShipScript.RShipCore.Extensions;
 using ShipScript.RShipCore.Helpers;
+using ShipScript.RShipCore.Pipes;
 
 namespace ShipScript.RShipCore
 {
@@ -25,7 +27,10 @@ namespace ShipScript.RShipCore
             NativeModules = new Dictionary<string, Module>();
             Compilers = new Dictionary<string, IModuleCompiler>();
             loader = loaderFactory.Create(Evaluator, NativeModules, Compilers, pathResolver);
-            Console = new VirtualConsole(null, Evaluator);
+
+            Console = new VirtualConsole.Console(null, Evaluator);
+            StdOut = new StdOut.StdOut();
+
             CommandPipe = new CommandPipe(this);
 
             Compilers[".ship"] = Compilers[".js"] = new ScriptCompiler();
@@ -36,6 +41,10 @@ namespace ShipScript.RShipCore
             NativeModules["console"] = new NativeModule("console", loader, Console);
             NativeModules["host"] = new NativeModule("host", loader, engine.CreateHostFunctions());
             NativeModules["xhost"] = new NativeModule("xhost", loader, engine.CreateExtendedHostFunctions());
+            foreach (var script in ScriptModules.Scripts.Keys)
+            {
+                NativeModules.Add(script, new ScriptModule(script, loader));
+            }
 
             ExecuteWrapped(@"
                 Object.defineProperty(this, 'global', { value: this });
@@ -53,7 +62,11 @@ namespace ShipScript.RShipCore
 
         public IScriptEvaluator Evaluator { get; }
 
-        public VirtualConsole Console { get; }
+        [ModuleExports]
+        public VirtualConsole.Console Console { get; }
+
+        [ModuleExports]
+        public StdOut.StdOut StdOut { get; }
 
         public CommandPipe CommandPipe { get; }
 
@@ -146,20 +159,7 @@ namespace ShipScript.RShipCore
 
         private void PrintExceptionError(Exception ex)
         {
-            IScriptEngineException scriptException = null;
-            var testEx = ex;
-            while (testEx != null)
-            {
-                // ReSharper disable once SuspiciousTypeConversion.Global
-                var testScriptEx = testEx as IScriptEngineException;
-                if (testScriptEx != null)
-                {
-                    scriptException = testScriptEx;
-                }
-
-                testEx = testEx.InnerException;
-            }
-
+            var scriptException = ex.GetInnerMost<IScriptEngineException>();
             Console.WriteErr(scriptException != null
                 ? StringHelpers.RemoveNativeLineNumbers(scriptException.ErrorDetails)
                 : ex.Message);
@@ -167,11 +167,11 @@ namespace ShipScript.RShipCore
 
         private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>()
         {
-            { nameof(CommandPipe), "!commandPipe" },
-            { nameof(AddNativeModule), "nativeModule" },
-            { nameof(EnableFullAccess), "enableFullAccess" },
-            { nameof(ExposeGlobalRequire), "exposeGlobalRequire" },
-            { nameof(Sleep), "sleep" }
+            [nameof(CommandPipe)] = "!commandPipe",
+            [nameof(AddNativeModule)] = "nativeModule",
+            [nameof(EnableFullAccess)] = "enableFullAccess",
+            [nameof(ExposeGlobalRequire)] = "exposeGlobalRequire",
+            [nameof(Sleep)] = "sleep"
         };
     }
 }

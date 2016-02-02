@@ -14,6 +14,7 @@ namespace ShipScript.RShipCore.Bootstrappers
 
         public string Run(IScriptEngine engine, string[] args)
         {
+            PrepareConsole();
             var core = CreateCore(engine);
             var evaluator = core.Evaluator;
             var stdin = new StandardInputStream(evaluator, ConsoleColor.Yellow);
@@ -62,6 +63,27 @@ namespace ShipScript.RShipCore.Bootstrappers
             return null;
         }
 
+        public void PrepareConsole()
+        {
+            var clearRequired = false;
+            if (Console.BackgroundColor != ConsoleColor.Black)
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                clearRequired = true;
+            }
+
+            if (Console.ForegroundColor != ConsoleColor.Gray)
+            {
+                Console.ForegroundColor = ConsoleColor.Gray;
+                clearRequired = true;
+            }
+
+            if (clearRequired)
+            {
+                Console.Clear();
+            }
+        }
+
         private RShipCore CreateCore(IScriptEngine engine)
         {
             var modulesPath = Path.Combine(PathHelpers.GetAssemblyDirectory(), "ship_modules");
@@ -73,12 +95,13 @@ namespace ShipScript.RShipCore.Bootstrappers
 
         private void SetOutputs(RShipCore core)
         {
+            core.StdOut.Writer = new StandardOutputWriter();
             var console = core.Console;
             console.ConsoleReader = new StandardInputReader();
             console.CoreStream.Pipe(new StandardOutputStream(ConsoleColor.Cyan));
             console.LogStream.Pipe(new StandardOutputStream(ConsoleColor.White));
-            console.ResultStream.Pipe(new StandardOutputStream(ConsoleColor.Green));
-            console.ErrStream.Pipe(new StandardOutputStream(ConsoleColor.Red));
+            console.ResultStream.Pipe(new StandardOutputStream(ConsoleColor.White));
+            console.ErrStream.Pipe(new StandardErrorStream(ConsoleColor.Red));
         }
     }
 }

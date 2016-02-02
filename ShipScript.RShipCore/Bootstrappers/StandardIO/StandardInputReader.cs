@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShipScript.RShipCore.VirtualConsole;
+using Console = System.Console;
 
 namespace ShipScript.RShipCore.Bootstrappers.StandardIO
 {

@@ -1,6 +1,4 @@
-﻿using ShipScript.Common;
-
-namespace ShipScript.RShipCore.Reflect
+﻿namespace ShipScript.RShipCore.Reflect
 {
     public class Reflector
     {
