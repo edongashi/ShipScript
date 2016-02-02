@@ -43,6 +43,7 @@
     <Compile Include="Annotations\ModuleExports.cs" />
     <Compile Include="Annotations\NativeObjectHintAttribute.cs" />
     <Compile Include="Abstract\ICommandReceiver.cs" />
+    <Compile Include="Bootstrappers\StandardIO\StandardErrorStream.cs" />
     <Compile Include="Bootstrappers\StandardIO\StandardOutputWriter.cs" />
     <Compile Include="Modules\ScriptModule.cs" />
     <Compile Include="Modules\ScriptModulePath.cs" />
