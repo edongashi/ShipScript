@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ShipScript.Common;
-using ShipScript.RShipCore.EventModel;
 using ShipScript.RShipCore.NativeTypes;
 
 namespace ShipScript.RShipCore.Pipes

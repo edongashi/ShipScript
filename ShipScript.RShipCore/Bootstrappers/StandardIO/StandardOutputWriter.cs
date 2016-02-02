@@ -1,7 +1,5 @@
 ﻿using System;
-using ShipScript.RShipCore.AbstractStdOut;
 using ShipScript.RShipCore.StdOut;
-using ShipScript.RShipCore.StdOutModule;
 
 namespace ShipScript.RShipCore.Bootstrappers.StandardIO
 {

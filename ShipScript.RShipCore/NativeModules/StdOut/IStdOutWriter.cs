@@ -1,4 +1,4 @@
-﻿namespace ShipScript.RShipCore.StdOutModule
+﻿namespace ShipScript.RShipCore.StdOut
 {
     public interface IStdOutWriter
     {

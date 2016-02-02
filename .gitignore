@@ -279,3 +279,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Script modules generated file
+/ShipScript.RShipCore/ScriptModules.cs

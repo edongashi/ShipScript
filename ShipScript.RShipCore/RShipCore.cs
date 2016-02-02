@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using ShipScript.Common;
 using ShipScript.RShipCore.Compilers;
-using ShipScript.RShipCore.ConsoleModule;
 using ShipScript.RShipCore.Extensions;
 using ShipScript.RShipCore.Helpers;
+using ShipScript.RShipCore.Pipes;
 
 namespace ShipScript.RShipCore
 {
@@ -28,7 +28,7 @@ namespace ShipScript.RShipCore
             Compilers = new Dictionary<string, IModuleCompiler>();
             loader = loaderFactory.Create(Evaluator, NativeModules, Compilers, pathResolver);
 
-            Console = new VirtualConsole(null, Evaluator);
+            Console = new VirtualConsole.Console(null, Evaluator);
             StdOut = new StdOut.StdOut();
 
             CommandPipe = new CommandPipe(this);
@@ -41,6 +41,10 @@ namespace ShipScript.RShipCore
             NativeModules["console"] = new NativeModule("console", loader, Console);
             NativeModules["host"] = new NativeModule("host", loader, engine.CreateHostFunctions());
             NativeModules["xhost"] = new NativeModule("xhost", loader, engine.CreateExtendedHostFunctions());
+            foreach (var script in ScriptModules.Scripts.Keys)
+            {
+                NativeModules.Add(script, new ScriptModule(script, loader));
+            }
 
             ExecuteWrapped(@"
                 Object.defineProperty(this, 'global', { value: this });
@@ -59,7 +63,7 @@ namespace ShipScript.RShipCore
         public IScriptEvaluator Evaluator { get; }
 
         [ModuleExports]
-        public VirtualConsole Console { get; }
+        public VirtualConsole.Console Console { get; }
 
         [ModuleExports]
         public StdOut.StdOut StdOut { get; }

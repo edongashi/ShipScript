@@ -1,5 +1,4 @@
 ﻿using System;
-using ShipScript.RShipCore.EventModel;
 
 namespace ShipScript.RShipCore.Pipes
 {

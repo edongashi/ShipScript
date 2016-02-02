@@ -1,4 +1,4 @@
-﻿namespace ShipScript.RShipCore
+﻿namespace ShipScript.RShipCore.VirtualConsole
 {
     public interface IConsoleInput
     {

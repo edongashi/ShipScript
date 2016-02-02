@@ -4,14 +4,14 @@ using ShipScript.Common;
 using ShipScript.RShipCore.Pipes;
 using ShipScript.RShipCore.Pipes.TransferModel;
 
-namespace ShipScript.RShipCore.ConsoleModule
+namespace ShipScript.RShipCore.VirtualConsole
 {
     [ModuleExports]
-    public class VirtualConsole : ICompositeStream<IPipeableStream>
+    public class Console : ICompositeStream<IPipeableStream>
     {
         private readonly IScriptEvaluator evaluator;
 
-        public VirtualConsole(IConsoleInput consoleReader, IScriptEvaluator evaluator)
+        public Console(IConsoleInput consoleReader, IScriptEvaluator evaluator)
         {
             this.evaluator = evaluator;
             ConsoleReader = consoleReader;

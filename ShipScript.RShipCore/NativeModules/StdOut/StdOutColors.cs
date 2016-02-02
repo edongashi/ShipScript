@@ -1,4 +1,4 @@
-﻿namespace ShipScript.RShipCore.AbstractStdOut
+﻿namespace ShipScript.RShipCore.StdOut
 {
     public class StdOutColors
     {
