@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ShipScript.Common;
 using ShipScript.RShipCore.Compilers;
+using ShipScript.RShipCore.Extensions;
 using ShipScript.RShipCore.Helpers;
 
 namespace ShipScript.RShipCore
@@ -146,20 +147,7 @@ namespace ShipScript.RShipCore
 
         private void PrintExceptionError(Exception ex)
         {
-            IScriptEngineException scriptException = null;
-            var testEx = ex;
-            while (testEx != null)
-            {
-                // ReSharper disable once SuspiciousTypeConversion.Global
-                var testScriptEx = testEx as IScriptEngineException;
-                if (testScriptEx != null)
-                {
-                    scriptException = testScriptEx;
-                }
-
-                testEx = testEx.InnerException;
-            }
-
+            var scriptException = ex.GetInnerMost<IScriptEngineException>();
             Console.WriteErr(scriptException != null
                 ? StringHelpers.RemoveNativeLineNumbers(scriptException.ErrorDetails)
                 : ex.Message);
@@ -167,11 +155,11 @@ namespace ShipScript.RShipCore
 
         private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>()
         {
-            { nameof(CommandPipe), "!commandPipe" },
-            { nameof(AddNativeModule), "nativeModule" },
-            { nameof(EnableFullAccess), "enableFullAccess" },
-            { nameof(ExposeGlobalRequire), "exposeGlobalRequire" },
-            { nameof(Sleep), "sleep" }
+            [nameof(CommandPipe)] = "!commandPipe",
+            [nameof(AddNativeModule)] = "nativeModule",
+            [nameof(EnableFullAccess)] = "enableFullAccess",
+            [nameof(ExposeGlobalRequire)] = "exposeGlobalRequire",
+            [nameof(Sleep)] = "sleep"
         };
     }
 }

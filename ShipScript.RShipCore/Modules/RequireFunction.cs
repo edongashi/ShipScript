@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ShipScript.Common;
+using ShipScript.RShipCore.Extensions;
 
 namespace ShipScript.RShipCore
 {
@@ -66,9 +68,9 @@ namespace ShipScript.RShipCore
 
         private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
         {
-            { nameof(Main), "main" },
-            { nameof(Invoke), "invoke" },
-            { nameof(Resolve), "resolve" }
+            [nameof(Main)] = "main",
+            [nameof(Invoke)] = "invoke",
+            [nameof(Resolve)] = "resolve"
         };
     }
 }

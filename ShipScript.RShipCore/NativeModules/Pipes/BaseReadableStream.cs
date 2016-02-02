@@ -133,7 +133,7 @@ namespace ShipScript.RShipCore.Pipes
 
         private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
         {
-            { nameof(Pipe), "pipe" },
+            [nameof(Pipe)] = "pipe"
         };
     }
 }

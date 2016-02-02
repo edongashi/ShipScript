@@ -47,6 +47,7 @@
     <Compile Include="Abstract\IEventSource.cs" />
     <Compile Include="Abstract\IScriptNativeObject.cs" />
     <Compile Include="Extensions\ScriptEvaluatorExtensions.cs" />
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Helpers\PathHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
     <Compile Include="Modules\Abstract\IModuleCompiler.cs" />
@@ -70,6 +71,9 @@
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Annotations\NativeObjectAttribute.cs" />
     <Compile Include="Helpers\ObjectHelpers.cs" />
+    <Compile Include="NativeModules\AbstractStdOut\ColorScheme.cs" />
+    <Compile Include="NativeModules\AbstractStdOut\IStdOutWriter.cs" />
+    <Compile Include="NativeModules\AbstractStdOut\StdOut.cs" />
     <Compile Include="NativeModules\Reflect\Reflector.cs" />
     <Compile Include="NativeTypes\JArray.cs" />
     <Compile Include="NativeTypes\Promise.cs" />

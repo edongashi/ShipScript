@@ -80,7 +80,7 @@ namespace ShipScript.RShipCore
 
         private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>()
         {
-            {nameof(WriteLog), "log"}
+            [nameof(WriteLog)] = "log"
         };
     }
 }
