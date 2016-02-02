@@ -87,7 +87,6 @@
     <Compile Include="NativeModules\Reflect\Reflector.cs" />
     <Compile Include="NativeTypes\JArray.cs" />
     <Compile Include="NativeTypes\Promise.cs" />
-    <Compile Include="NativeTypes\Undefined.cs" />
     <Compile Include="NativeModules\Pipes\Abstract\IAsyncWritableStream.cs" />
     <Compile Include="NativeModules\Pipes\Abstract\IPipe.cs" />
     <Compile Include="NativeModules\Pipes\Abstract\IPipeableStream.cs" />
