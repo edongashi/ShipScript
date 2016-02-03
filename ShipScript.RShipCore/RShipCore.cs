@@ -162,7 +162,7 @@ namespace ShipScript.RShipCore
         {
             var scriptException = ex.GetInnerMost<IScriptEngineException>();
             Console.WriteErr(scriptException != null
-                ? StringHelpers.RemoveNativeLineNumbers(scriptException.ErrorDetails)
+                ? StringHelpers.CleanupStackTrace(scriptException.ErrorDetails)
                 : ex.Message);
         }
 
