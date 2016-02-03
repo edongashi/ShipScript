@@ -39,6 +39,7 @@ namespace ShipScript.RShipCore
             coreModule = new NativeModule("core", loader, this);
             NativeModules["core"] = coreModule;
             NativeModules["console"] = new NativeModule("console", loader, Console);
+            NativeModules["stdout"] = new NativeModule("stdout", loader, StdOut);
             NativeModules["host"] = new NativeModule("host", loader, engine.CreateHostFunctions());
             NativeModules["xhost"] = new NativeModule("xhost", loader, engine.CreateExtendedHostFunctions());
             foreach (var script in ScriptModules.Scripts.Keys)
@@ -47,7 +48,7 @@ namespace ShipScript.RShipCore
             }
 
             ExecuteWrapped(@"
-                Object.defineProperty(this, 'global', { value: this });
+                Object.defineProperty(this, 'global', { value: this, enumerable: true });
                 var engineInternal = this.EngineInternal;
                 delete this.EngineInternal;
                 Object.defineProperty(this, 'EngineInternal', { value: engineInternal });
@@ -161,7 +162,7 @@ namespace ShipScript.RShipCore
         {
             var scriptException = ex.GetInnerMost<IScriptEngineException>();
             Console.WriteErr(scriptException != null
-                ? StringHelpers.RemoveNativeLineNumbers(scriptException.ErrorDetails)
+                ? StringHelpers.CleanupStackTrace(scriptException.ErrorDetails)
                 : ex.Message);
         }
 
