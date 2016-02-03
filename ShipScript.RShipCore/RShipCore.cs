@@ -48,7 +48,7 @@ namespace ShipScript.RShipCore
             }
 
             ExecuteWrapped(@"
-                Object.defineProperty(this, 'global', { value: this });
+                Object.defineProperty(this, 'global', { value: this, enumerable: true });
                 var engineInternal = this.EngineInternal;
                 delete this.EngineInternal;
                 Object.defineProperty(this, 'EngineInternal', { value: engineInternal });
