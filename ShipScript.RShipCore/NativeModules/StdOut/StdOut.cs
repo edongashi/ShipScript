@@ -49,7 +49,7 @@ namespace ShipScript.RShipCore.StdOut
 
         private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>()
         {
-            [nameof(Colors)] = "colors",
+            [nameof(Colors)] = "color",
             [nameof(Write)] = "write",
             [nameof(WriteLine)] = "writeln"
         };
