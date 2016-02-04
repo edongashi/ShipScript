@@ -52,6 +52,10 @@ namespace ShipScript.RShipCore.Bootstrappers.StandardIO
             {
                 Console.WriteLine(rest);
             }
+            else
+            {
+                Console.WriteLine();
+            }
         }
 
         private void PrintColored(string text)

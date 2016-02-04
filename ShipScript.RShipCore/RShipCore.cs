@@ -72,7 +72,14 @@ namespace ShipScript.RShipCore
 
         public CommandPipe CommandPipe { get; }
 
+        public bool ExecuteAsCommand { get; set; }
+
         public bool Sleeping { get; private set; }
+
+        public object Require(string request)
+        {
+            return coreModule.Require(request).Exports;
+        }
 
         public Module Run(string request)
         {
@@ -88,7 +95,7 @@ namespace ShipScript.RShipCore
             }
             catch (Exception ex)
             {
-                PrintExceptionError(ex);
+                Console.WriteErr(ex.GetScriptStack());
                 Sleeping = true;
                 throw;
             }
@@ -109,22 +116,6 @@ namespace ShipScript.RShipCore
             return engine.Script.require = coreModule.RequireFunction.GetScriptObject();
         }
 
-        public object ExposeExplore()
-        {
-            return engine.Script.explore = ((dynamic)engine.Evaluate(@"
-                (function (nativeWrite) {
-                    var explore = function (obj) {
-                        for (var prop in obj) {
-                            nativeWrite(prop);
-                        }
-                    }
-                    var exploreToString = () => 'function explore() { [native code] }';
-                    Object.defineProperty(explore, 'toString', { value: exploreToString });
-                    Object.defineProperty(exploreToString, 'toString', { value: toString });
-                    return explore;
-                }).valueOf()"))(new Action<object>(Console.WriteCore));
-        }
-
         public void EnableFullAccess()
         {
             engine.DefaultScriptAccess = ScriptAccessEnum.Full;
@@ -140,12 +131,20 @@ namespace ShipScript.RShipCore
             Console.WriteCommand(command);
             try
             {
-                var result = engine.ExecuteCommand(command);
-                Console.WriteResult(result);
+                if (ExecuteAsCommand)
+                {
+                    var result = engine.ExecuteCommand(command);
+                    Console.WriteCore(result);
+                }
+                else
+                {
+                    var result = engine.Evaluate("eval", command);
+                    Console.WriteResult(result);
+                }
             }
             catch (Exception ex)
             {
-                PrintExceptionError(ex);
+                Console.WriteErr(ex.GetScriptStack());
             }
         }
 
@@ -157,14 +156,6 @@ namespace ShipScript.RShipCore
                 (function () {{
                     {code}
                 }})()");
-        }
-
-        private void PrintExceptionError(Exception ex)
-        {
-            var scriptException = ex.GetInnerMost<IScriptEngineException>();
-            Console.WriteErr(scriptException != null
-                ? StringHelpers.CleanupStackTrace(scriptException.ErrorDetails)
-                : ex.Message);
         }
 
         private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>()

@@ -5,8 +5,8 @@ const color = stdout.color;
 const nativeProp = '{c2cf47d3-916b-4a3f-be2a-6ff567425808}';
 
 function printString(str, longString) {
-    if (!longString && str.length > 50) {
-        var substr = str.substring(0, 50);
+    if (!longString && str.length > 150) {
+        var substr = str.substring(0, 150);
         stdout.write(`'${substr}`, color.dgreen);
         stdout.write('...', color.dgray);
         stdout.write('\'', color.dgreen);
@@ -78,8 +78,8 @@ function explore(obj) {
             return;
         }
 
-        if (len > 200) {
-            len = 200;
+        if (len > 1000) {
+            len = 1000;
             cut = true;
         }
 

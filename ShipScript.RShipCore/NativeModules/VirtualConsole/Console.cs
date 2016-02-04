@@ -81,7 +81,14 @@ namespace ShipScript.RShipCore.VirtualConsole
 
         private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>()
         {
-            [nameof(WriteLog)] = "log"
+            [nameof(WriteData)] = "data",
+            [nameof(WriteAlt)] = "alt",
+            [nameof(WriteLog)] = "log",
+            [nameof(WriteErr)] = "err",
+            [nameof(WriteCore)] = "core",
+            [nameof(WriteCommand)] = "command",
+            [nameof(WriteResult)] = "result",
+            [nameof(Read)] = "read"
         };
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using ShipScript.Common;
+using ShipScript.RShipCore.Helpers;
 
 namespace ShipScript.RShipCore.Extensions
 {
@@ -20,6 +22,12 @@ namespace ShipScript.RShipCore.Extensions
             }
 
             return result;
+        }
+
+        public static string GetScriptStack(this Exception exception)
+        {
+            var error = exception.GetInnerMost<IScriptEngineException>()?.ErrorDetails;
+            return error != null ? StringHelpers.CleanupStackTrace(error) : exception.Message;
         }
     }
 }
