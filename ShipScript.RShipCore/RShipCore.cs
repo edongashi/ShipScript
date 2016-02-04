@@ -47,6 +47,7 @@ namespace ShipScript.RShipCore
                 NativeModules.Add(script, new ScriptModule(script, loader));
             }
 
+            engine.Script.EngineInternal.isVoid = new Func<object, bool>(engine.IsVoidResult);
             ExecuteWrapped(@"
                 Object.defineProperty(this, 'global', { value: this, enumerable: true });
                 var engineInternal = this.EngineInternal;

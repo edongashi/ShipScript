@@ -26,6 +26,11 @@ function printSimple(obj, longString) {
         return true;
     }
 
+    if (EngineInternal.isVoid(obj)) {
+        stdout.write('void', color.dmagenta);
+        return true;
+    }
+
     const type = typeof obj;
     if (type === 'string') {
         printString(obj, longString);
@@ -66,10 +71,16 @@ function explore(obj) {
 
     var len;
     if (obj instanceof Array) {
+        let cut = false;
         len = obj.length - 1;
         if (len === -1) {
             stdout.writeln('[]');
             return;
+        }
+
+        if (len > 200) {
+            len = 200;
+            cut = true;
         }
 
         stdout.write('[ ');
@@ -80,7 +91,11 @@ function explore(obj) {
             stdout.write(', ');
         }
 
-        arrElement = obj[len];
+        if (cut) {
+            stdout.write('... ');
+        }
+
+        arrElement = obj[obj.length - 1];
         printSimple(arrElement) || printObject(arrElement, obj);
         stdout.writeln(' ]');
         return;
