@@ -17,7 +17,7 @@ namespace ShipScript.RShipCore.Bootstrappers
             PrepareConsole();
             var core = CreateCore(engine);
             var evaluator = core.Evaluator;
-            var stdin = new StandardInputStream(evaluator, ConsoleColor.Yellow);
+            var stdin = new StandardInputStream(evaluator, ConsoleColor.Green);
             core.AddNativeModule("stdin", stdin);
             SetOutputs(core);
             if (args == null || args.Length == 0)
@@ -55,8 +55,7 @@ namespace ShipScript.RShipCore.Bootstrappers
             if (core.Sleeping)
             {
                 core.ExposeGlobalRequire();
-                core.ExposeExplore();
-                var pipe = stdin.Pipe(core.CommandPipe);
+                stdin.Pipe(core.CommandPipe);
                 stdin.Run();
             }
 
@@ -100,7 +99,7 @@ namespace ShipScript.RShipCore.Bootstrappers
             console.ConsoleReader = new StandardInputReader();
             console.CoreStream.Pipe(new StandardOutputStream(ConsoleColor.Cyan));
             console.LogStream.Pipe(new StandardOutputStream(ConsoleColor.White));
-            console.ResultStream.Pipe(new StandardOutputStream(ConsoleColor.White));
+            console.ResultStream.Pipe(core.Require("explore"));
             console.ErrStream.Pipe(new StandardErrorStream(ConsoleColor.Red));
         }
     }

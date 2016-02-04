@@ -5,8 +5,8 @@ const color = stdout.color;
 const nativeProp = '{c2cf47d3-916b-4a3f-be2a-6ff567425808}';
 
 function printString(str, longString) {
-    if (!longString && str.length > 50) {
-        var substr = str.substring(0, 50);
+    if (!longString && str.length > 150) {
+        var substr = str.substring(0, 150);
         stdout.write(`'${substr}`, color.dgreen);
         stdout.write('...', color.dgray);
         stdout.write('\'', color.dgreen);
@@ -23,6 +23,11 @@ function printSimple(obj, longString) {
 
     if (obj === null) {
         stdout.write('null', color.white);
+        return true;
+    }
+
+    if (EngineInternal.isVoid(obj)) {
+        stdout.write('void', color.dmagenta);
         return true;
     }
 
@@ -66,10 +71,16 @@ function explore(obj) {
 
     var len;
     if (obj instanceof Array) {
+        let cut = false;
         len = obj.length - 1;
         if (len === -1) {
             stdout.writeln('[]');
             return;
+        }
+
+        if (len > 1000) {
+            len = 1000;
+            cut = true;
         }
 
         stdout.write('[ ');
@@ -80,7 +91,11 @@ function explore(obj) {
             stdout.write(', ');
         }
 
-        arrElement = obj[len];
+        if (cut) {
+            stdout.write('... ');
+        }
+
+        arrElement = obj[obj.length - 1];
         printSimple(arrElement) || printObject(arrElement, obj);
         stdout.writeln(' ]');
         return;
