@@ -76,6 +76,18 @@ namespace ShipScript.RShipCore
 
         public bool Sleeping { get; private set; }
 
+        public bool FullAccess
+        {
+            get
+            {
+                return engine.DefaultScriptAccess != ScriptAccessEnum.None;
+            }
+            set
+            {
+                engine.DefaultScriptAccess = value ? ScriptAccessEnum.Full : ScriptAccessEnum.None;
+            }
+        }
+
         public object Require(string request)
         {
             return coreModule.Require(request).Exports;
@@ -116,31 +128,24 @@ namespace ShipScript.RShipCore
             return engine.Script.require = coreModule.RequireFunction.GetScriptObject();
         }
 
-        public void EnableFullAccess()
-        {
-            engine.DefaultScriptAccess = ScriptAccessEnum.Full;
-        }
-
-        public void DisableFullAccess()
-        {
-            engine.DefaultScriptAccess = ScriptAccessEnum.None;
-        }
-
         public void ExecuteCommand(string command)
         {
             Console.WriteCommand(command);
             try
             {
+                object result;
                 if (ExecuteAsCommand)
                 {
-                    var result = engine.ExecuteCommand(command);
-                    Console.WriteCore(result);
+                    result = engine.ExecuteCommand(command);
                 }
                 else
                 {
-                    var result = engine.Evaluate("eval", command);
-                    Console.WriteResult(result);
+                    #warning Concurrency issue
+                    engine.Script.EngineInternal.command = command;
+                    result = engine.Evaluate("Command", "eval(EngineInternal.command)");
                 }
+
+                Console.WriteResult(result);
             }
             catch (Exception ex)
             {
@@ -162,7 +167,8 @@ namespace ShipScript.RShipCore
         {
             [nameof(CommandPipe)] = "!commandPipe",
             [nameof(AddNativeModule)] = "nativeModule",
-            [nameof(EnableFullAccess)] = "enableFullAccess",
+            [nameof(FullAccess)] = "all",
+            [nameof(ExecuteAsCommand)] = "commandMode",
             [nameof(ExposeGlobalRequire)] = "exposeGlobalRequire",
             [nameof(Sleep)] = "sleep"
         };
