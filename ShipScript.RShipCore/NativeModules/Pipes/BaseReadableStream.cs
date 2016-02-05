@@ -91,9 +91,17 @@ namespace ShipScript.RShipCore.Pipes
                 }
 
                 promises.Clear();
-                foreach (var pipe in pipes)
+                // ReSharper disable once ForCanBeConvertedToForeach
+                for (int i = 0; i < pipes.Count; i++)
                 {
-                    pipe.Write(value);
+                    try
+                    {
+                        var pipe = pipes[i];
+                        pipe.Write(value);
+                    }
+                    catch (PipeBrokenException)
+                    {
+                    }
                 }
 
                 lock (removeSyncRoot)
@@ -132,7 +140,9 @@ namespace ShipScript.RShipCore.Pipes
 
         private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
         {
-            [nameof(Pipe)] = "pipe"
+            [nameof(Pipe)] = "pipe",
+            [nameof(GetPipes)] = "getPipes",
+            [nameof(ReadNext)] = "next"
         };
     }
 }

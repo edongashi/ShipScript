@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ShipScript.Common;
 using ShipScript.RShipCore.Pipes;
 
@@ -18,6 +19,11 @@ namespace ShipScript.RShipCore.Bootstrappers.StandardIO
 
         public void Run()
         {
+            if (Running)
+            {
+                return;
+            }
+
             Running = true;
             while (Running)
             {
@@ -42,5 +48,11 @@ namespace ShipScript.RShipCore.Bootstrappers.StandardIO
 
             Running = false;
         }
+
+        private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
+        {
+            [nameof(Run)] = "run",
+            [nameof(Stop)] = "stop"
+        };
     }
 }

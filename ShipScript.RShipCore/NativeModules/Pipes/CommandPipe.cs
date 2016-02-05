@@ -1,4 +1,6 @@
-﻿namespace ShipScript.RShipCore.Pipes
+﻿using System.Collections.Generic;
+
+namespace ShipScript.RShipCore.Pipes
 {
     public class CommandPipe : IWritableStream
     {
@@ -17,5 +19,10 @@
                 receiver.ExecuteCommand(command);
             }
         }
+
+        private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
+        {
+            [nameof(Write)] = "write"
+        };
     }
 }
