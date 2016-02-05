@@ -153,6 +153,20 @@ namespace ShipScript.RShipCore
             }
         }
 
+        public bool ScriptEvaluate()
+        {
+            try
+            {
+                engine.Execute("eval", @"EngineInternal.evalResult = eval(EngineInternal.evalCode)");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                engine.Script.EngineInternal.evalError = ex.GetScriptStack();
+                return false;
+            }
+        }
+
         public void Sleep() => Sleeping = true;
 
         private void ExecuteWrapped(string code)
@@ -168,6 +182,7 @@ namespace ShipScript.RShipCore
             [nameof(CommandPipe)] = "!commandPipe",
             [nameof(AddNativeModule)] = "nativeModule",
             [nameof(FullAccess)] = "all",
+            [nameof(ScriptEvaluate)] = "eval",
             [nameof(ExecuteAsCommand)] = "commandMode",
             [nameof(ExposeGlobalRequire)] = "exposeGlobalRequire",
             [nameof(Sleep)] = "sleep"
