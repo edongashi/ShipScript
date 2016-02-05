@@ -20,7 +20,7 @@ namespace ShipScript.RShipCore.Pipes
             }
         }
 
-        private static Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
         {
             [nameof(Write)] = "write"
         };
