@@ -1,4 +1,5 @@
-﻿using ShipScript.RShipCore.NativeTypes;
+﻿using ShipScript.Common;
+using ShipScript.RShipCore.NativeTypes;
 
 namespace ShipScript.RShipCore.Extensions
 {
@@ -25,6 +26,11 @@ namespace ShipScript.RShipCore.Extensions
             {
                 return obj.ToString();
             }
+        }
+
+        public static bool IsDefined(this object obj)
+        {
+            return !(obj is Undefined || obj is VoidResult);
         }
     }
 }

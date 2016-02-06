@@ -68,12 +68,5 @@ namespace ShipScript.RShipCore
             loaded = true;
             return function;
         }
-
-        private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
-        {
-            [nameof(Main)] = "main",
-            [nameof(Invoke)] = "invoke",
-            [nameof(Resolve)] = "resolve"
-        };
     }
 }

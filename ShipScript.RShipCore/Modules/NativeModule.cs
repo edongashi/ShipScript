@@ -28,10 +28,5 @@ namespace ShipScript.RShipCore
         {
             base.Exports = newValue;
         }
-
-        private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
-        {
-            [nameof(Exports)] = "exports"
-        };
     }
 }

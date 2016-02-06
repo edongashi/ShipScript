@@ -18,10 +18,5 @@ namespace ShipScript.RShipCore
             var type = Assembly.GetType(name);
             return Activator.CreateInstance(type, args);
         }
-
-        private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
-        {
-            [nameof(CreateObject)] = "create"
-        };
     }
 }

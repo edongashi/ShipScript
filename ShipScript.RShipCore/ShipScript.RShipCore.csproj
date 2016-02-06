@@ -51,7 +51,6 @@
     <Compile Include="Abstract\IEventConnection.cs" />
     <Compile Include="Abstract\IEventSource.cs" />
     <Compile Include="Abstract\IScriptNativeObject.cs" />
-    <Compile Include="Extensions\ScriptEvaluatorExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Helpers\PathHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />

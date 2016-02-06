@@ -137,12 +137,5 @@ namespace ShipScript.RShipCore.Pipes
                 pipes.Remove(pipe);
             }
         }
-
-        private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
-        {
-            [nameof(Pipe)] = "pipe",
-            [nameof(GetPipes)] = "getPipes",
-            [nameof(ReadNext)] = "next"
-        };
     }
 }

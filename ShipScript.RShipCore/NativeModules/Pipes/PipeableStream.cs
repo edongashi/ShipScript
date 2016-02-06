@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using ShipScript.Common;
 using ShipScript.RShipCore.Extensions;
-using ShipScript.RShipCore.NativeTypes;
 
 namespace ShipScript.RShipCore.Pipes
 {
@@ -40,7 +38,7 @@ namespace ShipScript.RShipCore.Pipes
                 return;
             }
 
-            if (Evaluator.IsDefined(newValue) && !(newValue is IgnoreToken))
+            if (newValue.IsDefined() && !(newValue is IgnoreToken))
             {
                 base.Write(newValue);
                 OnWritten(newValue);
