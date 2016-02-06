@@ -48,11 +48,5 @@ namespace ShipScript.RShipCore.Bootstrappers.StandardIO
 
             Running = false;
         }
-
-        private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
-        {
-            [nameof(Run)] = "run",
-            [nameof(Stop)] = "stop"
-        };
     }
 }

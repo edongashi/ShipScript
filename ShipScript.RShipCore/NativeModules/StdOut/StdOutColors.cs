@@ -37,25 +37,5 @@ namespace ShipScript.RShipCore.StdOut
         public int Yellow => 14;
 
         public int White => 15;
-
-        private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
-        {
-            [nameof(Black)] = "black",
-            [nameof(DarkBlue)] = "dblue",
-            [nameof(DarkGreen)] = "dgreen",
-            [nameof(DarkCyan)] = "dcyan",
-            [nameof(DarkRed)] = "dred",
-            [nameof(DarkMagenta)] = "dmagenta",
-            [nameof(DarkYellow)] = "dyellow",
-            [nameof(Gray)] = "gray",
-            [nameof(DarkGray)] = "dgray",
-            [nameof(Blue)] = "blue",
-            [nameof(Green)] = "green",
-            [nameof(Cyan)] = "cyan",
-            [nameof(Red)] = "red",
-            [nameof(Magenta)] = "magenta",
-            [nameof(Yellow)] = "yellow",
-            [nameof(White)] = "white"
-        };
     }
 }

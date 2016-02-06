@@ -19,10 +19,5 @@ namespace ShipScript.RShipCore.Pipes
                 receiver.ExecuteCommand(command);
             }
         }
-
-        private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>
-        {
-            [nameof(Write)] = "write"
-        };
     }
 }

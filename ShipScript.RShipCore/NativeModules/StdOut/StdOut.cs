@@ -46,12 +46,5 @@ namespace ShipScript.RShipCore.StdOut
         {
             Writer?.WriteLine(value, color);
         }
-
-        private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>()
-        {
-            [nameof(Colors)] = "color",
-            [nameof(Write)] = "write",
-            [nameof(WriteLine)] = "writeln"
-        };
     }
 }

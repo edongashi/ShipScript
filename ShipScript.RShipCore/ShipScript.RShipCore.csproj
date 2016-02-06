@@ -51,7 +51,6 @@
     <Compile Include="Abstract\IEventConnection.cs" />
     <Compile Include="Abstract\IEventSource.cs" />
     <Compile Include="Abstract\IScriptNativeObject.cs" />
-    <Compile Include="Extensions\ScriptEvaluatorExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Helpers\PathHelpers.cs" />
     <Compile Include="Helpers\StringHelpers.cs" />
@@ -123,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="NativeModules\explore.js" />
+    <Content Include="NativeModules\repl.js" />
     <Content Include="ScriptModules.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ScriptModules.cs</LastGenOutput>

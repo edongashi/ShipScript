@@ -22,7 +22,7 @@ namespace ShipScript.RShipCore
         {
             this.engine = engine;
             Evaluator = engine;
-            engine.DefaultScriptAccess = ScriptAccessEnum.None;
+            engine.DefaultAccess = ScriptAccess.None;
             this.pathResolver = pathResolver;
             NativeModules = new Dictionary<string, Module>();
             Compilers = new Dictionary<string, IModuleCompiler>();
@@ -47,7 +47,7 @@ namespace ShipScript.RShipCore
                 NativeModules.Add(script, new ScriptModule(script, loader));
             }
 
-            engine.Script.EngineInternal.isVoid = new Func<object, bool>(engine.IsVoidResult);
+            engine.Script.EngineInternal.isVoid = new Func<object, bool>(obj => obj is VoidResult);
             ExecuteWrapped(@"
                 Object.defineProperty(this, 'global', { value: this, enumerable: true });
                 var engineInternal = this.EngineInternal;
@@ -80,11 +80,11 @@ namespace ShipScript.RShipCore
         {
             get
             {
-                return engine.DefaultScriptAccess != ScriptAccessEnum.None;
+                return engine.DefaultAccess != ScriptAccess.None;
             }
             set
             {
-                engine.DefaultScriptAccess = value ? ScriptAccessEnum.Full : ScriptAccessEnum.None;
+                engine.DefaultAccess = value ? ScriptAccess.Full : ScriptAccess.None;
             }
         }
 
@@ -153,6 +153,20 @@ namespace ShipScript.RShipCore
             }
         }
 
+        public bool ScriptEvaluate()
+        {
+            try
+            {
+                engine.Execute("eval", @"EngineInternal.evalResult = eval(EngineInternal.evalCode)");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                engine.Script.EngineInternal.evalError = ex.GetScriptStack();
+                return false;
+            }
+        }
+
         public void Sleep() => Sleeping = true;
 
         private void ExecuteWrapped(string code)
@@ -162,15 +176,5 @@ namespace ShipScript.RShipCore
                     {code}
                 }})()");
         }
-
-        private static readonly Dictionary<string, string> ScriptAccess = new Dictionary<string, string>()
-        {
-            [nameof(CommandPipe)] = "!commandPipe",
-            [nameof(AddNativeModule)] = "nativeModule",
-            [nameof(FullAccess)] = "all",
-            [nameof(ExecuteAsCommand)] = "commandMode",
-            [nameof(ExposeGlobalRequire)] = "exposeGlobalRequire",
-            [nameof(Sleep)] = "sleep"
-        };
     }
 }

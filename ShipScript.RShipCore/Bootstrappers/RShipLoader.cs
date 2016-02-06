@@ -55,7 +55,7 @@ namespace ShipScript.RShipCore.Bootstrappers
             if (core.Sleeping)
             {
                 core.ExposeGlobalRequire();
-                stdin.Pipe(core.CommandPipe);
+                engine.Execute("require('repl').hook(require('stdin'))");
                 stdin.Run();
             }
 
@@ -99,7 +99,6 @@ namespace ShipScript.RShipCore.Bootstrappers
             console.ConsoleReader = new StandardInputReader();
             console.CoreStream.Pipe(new StandardOutputStream(ConsoleColor.Cyan));
             console.LogStream.Pipe(new StandardOutputStream(ConsoleColor.White));
-            console.ResultStream.Pipe(core.Require("explore"));
             console.ErrStream.Pipe(new StandardErrorStream(ConsoleColor.Red));
         }
     }
