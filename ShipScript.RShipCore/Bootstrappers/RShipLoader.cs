@@ -16,7 +16,7 @@ namespace ShipScript.RShipCore.Bootstrappers
         {
             PrepareConsole();
             var core = CreateCore(engine);
-            var evaluator = core.Evaluator;
+            var evaluator = core.Engine;
             var stdin = new StandardInputStream(evaluator, ConsoleColor.Green);
             core.AddNativeModule("stdin", stdin);
             SetOutputs(core);

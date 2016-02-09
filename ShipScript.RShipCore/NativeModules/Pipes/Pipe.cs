@@ -1,4 +1,5 @@
 ﻿using System;
+using ShipScript.Common;
 
 namespace ShipScript.RShipCore.Pipes
 {
@@ -14,15 +15,20 @@ namespace ShipScript.RShipCore.Pipes
             this.breakFunction = breakFunction;
         }
 
+        [ScriptMember("source", ScriptMemberFlags.ExposeRuntimeType)]
         public IReadableStream Source { get; }
 
+        [ScriptMember("target", ScriptMemberFlags.ExposeRuntimeType)]
         public IWritableStream Target { get; }
 
+        [ScriptMember("transform")]
         [NativeObjectHint("Function")]
         public dynamic TransformFunction { get; set; }
 
+        [ScriptMember("broken")]
         public bool Broken { get; private set; }
 
+        [ScriptMember("write")]
         public void Write(object value)
         {
             if (Broken)
@@ -54,6 +60,7 @@ namespace ShipScript.RShipCore.Pipes
             }
         }
 
+        [ScriptMember("break")]
         public void BreakPipe()
         {
             if (Broken)
@@ -65,6 +72,7 @@ namespace ShipScript.RShipCore.Pipes
             Broken = true;
         }
 
+        [ScriptMember("disconnect")]
         public void Disconnect()
         {
             BreakPipe();

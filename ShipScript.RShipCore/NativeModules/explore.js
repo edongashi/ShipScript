@@ -1,8 +1,14 @@
 ﻿'use strict';
 // ReSharper disable UndeclaredGlobalVariableUsing
 const stdout = require('stdout');
-const color = stdout.color;
+var color = stdout.color;
 const nativeProp = '{c2cf47d3-916b-4a3f-be2a-6ff567425808}';
+
+{
+    let copy = {};
+    Object.assign(copy, color);
+    color = copy;
+}
 
 function printString(str, longString) {
     if (!longString && str.length > 150) {
@@ -51,14 +57,38 @@ function printObject(obj, parent) {
         return true;
     }
 
+    if (obj === global) {
+        stdout.write('[Global]', color.dcyan);
+        return true;
+    }
+
     if (!obj.constructor || !obj.constructor.name) {
         stdout.write('[Unknown]', color.dred);
         return true;
     }
 
     const name = obj.constructor.name;
-    const col = obj.hasOwnProperty(nativeProp) ? color.dmagenta : color.dcyan;
-    stdout.write(`[${name}]`, col);
+    if (obj.hasOwnProperty(nativeProp)) {
+        if (name === "HostDelegate") {
+            stdout.write('[Method]', color.dmagenta);
+            return true;
+        }
+
+        stdout.write('[' + name, color.dmagenta);
+        try {
+            const typeName = obj.GetType().Name;
+            if (typeName) {
+                stdout.write(':' + typeName, color.dmagenta);
+            }
+        } catch (err) {
+            // ignored
+        }
+
+        stdout.write(']', color.dmagenta);
+        return true;
+    }
+
+    stdout.write(`[${name}]`, color.dcyan);
     return true;
 }
 
@@ -104,9 +134,19 @@ function explore(obj) {
     printObject(obj);
     stdout.write(' {');
     const properties = [];
-    // ReSharper disable once MissingHasOwnPropertyInForeach
-    for (let key in obj) {
-        properties.push(key);
+    if (obj.hasOwnProperty(nativeProp)) {
+        // ReSharper disable once MissingHasOwnPropertyInForeach
+        for (let key in obj) {
+            if (key === 'ToString' || key === 'GetHashCode' || key === 'GetType' || key === 'Equals') {
+                continue;
+            }
+            properties.push(key);
+        }
+    } else {
+        // ReSharper disable once MissingHasOwnPropertyInForeach
+        for (let key in obj) {
+            properties.push(key);
+        }
     }
 
     len = properties.length;

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
+using ShipScript.Common;
 
 namespace ShipScript.RShipCore
 {
@@ -13,6 +13,7 @@ namespace ShipScript.RShipCore
 
         public Assembly Assembly { get; }
 
+        [ScriptMember("create")]
         public object CreateObject(string name, params object[] args)
         {
             var type = Assembly.GetType(name);

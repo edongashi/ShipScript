@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using ShipScript.Common;
 using ShipScript.RShipCore.Pipes;
 
@@ -15,8 +14,10 @@ namespace ShipScript.RShipCore.Bootstrappers.StandardIO
             this.decoratorColor = decoratorColor;
         }
 
+        [ScriptMember("running")]
         public bool Running { get; private set; }
 
+        [ScriptMember("run")]
         public void Run()
         {
             if (Running)
@@ -39,6 +40,7 @@ namespace ShipScript.RShipCore.Bootstrappers.StandardIO
             }
         }
 
+        [ScriptMember("stop")]
         public void Stop()
         {
             if (!Running)

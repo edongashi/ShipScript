@@ -42,12 +42,10 @@
   <ItemGroup>
     <Compile Include="Annotations\ModuleExports.cs" />
     <Compile Include="Annotations\NativeObjectHintAttribute.cs" />
-    <Compile Include="Abstract\ICommandReceiver.cs" />
     <Compile Include="Bootstrappers\StandardIO\StandardErrorStream.cs" />
     <Compile Include="Bootstrappers\StandardIO\StandardOutputWriter.cs" />
     <Compile Include="Modules\ScriptModule.cs" />
     <Compile Include="Modules\ScriptModulePath.cs" />
-    <Compile Include="NativeModules\Pipes\CommandPipe.cs" />
     <Compile Include="Abstract\IEventConnection.cs" />
     <Compile Include="Abstract\IEventSource.cs" />
     <Compile Include="Abstract\IScriptNativeObject.cs" />
@@ -75,6 +73,9 @@
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Annotations\NativeObjectAttribute.cs" />
     <Compile Include="Helpers\ObjectHelpers.cs" />
+    <Compile Include="RShipCore.script.cs">
+      <DependentUpon>RShipCore.cs</DependentUpon>
+    </Compile>
     <Compile Include="ScriptModules.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

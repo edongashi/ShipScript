@@ -11,10 +11,13 @@ function evaluate(command) {
 
     EngineInternal.evalCode = command;
     const success = core.eval();
+    EngineInternal.evalCode = undefined;
     if (success) {
         explore(EngineInternal.evalResult);
+        EngineInternal.evalResult = undefined;
     } else {
         console.err(EngineInternal.evalError);
+        EngineInternal.evalError = undefined;
     }
 }
 

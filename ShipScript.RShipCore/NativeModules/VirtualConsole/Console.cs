@@ -26,14 +26,22 @@ namespace ShipScript.RShipCore.VirtualConsole
 
         public IConsoleInput ConsoleReader { get; set; }
 
+        [ScriptMember("dataStream")]
         public IPipeableStream DataStream { get; }
+        [ScriptMember("altStream")]
         public IPipeableStream AltStream { get; }
+        [ScriptMember("logStream")]
         public IPipeableStream LogStream { get; }
+        [ScriptMember("errStream")]
         public IPipeableStream ErrStream { get; }
+        [ScriptMember("coreStream")]
         public IPipeableStream CoreStream { get; }
+        [ScriptMember("commandStream")]
         public IPipeableStream CommandStream { get; }
+        [ScriptMember("resultStream")]
         public IPipeableStream ResultStream { get; }
 
+        [ScriptMember("read")]
         public string Read()
         {
             if (ConsoleReader == null)
@@ -44,36 +52,43 @@ namespace ShipScript.RShipCore.VirtualConsole
             return ConsoleReader.Read();
         }
 
+        [ScriptMember("data")]
         public void WriteData(object value)
         {
             DataStream.Write(value);
         }
 
+        [ScriptMember("alt")]
         public void WriteAlt(object value)
         {
             AltStream.Write(value);
         }
 
+        [ScriptMember("log")]
         public void WriteLog(object value)
         {
             LogStream.Write(value);
         }
 
+        [ScriptMember("err")]
         public void WriteErr(object value)
         {
             ErrStream.Write(value);
         }
 
+        [ScriptMember("core")]
         public void WriteCore(object value)
         {
             CoreStream.Write(value);
         }
 
+        [ScriptMember("command")]
         public void WriteCommand(object value)
         {
             CommandStream.Write(value);
         }
 
+        [ScriptMember("result")]
         public void WriteResult(object value)
         {
             ResultStream.Write(value);

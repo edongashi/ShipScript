@@ -24,6 +24,7 @@ namespace ShipScript.RShipCore.Pipes
             promises = new List<Promise>();
         }
 
+        [ScriptMember("pipeCount")]
         public int PipeCount => pipes.Count;
 
         public IEnumerable<IPipe> Pipes
@@ -37,16 +38,19 @@ namespace ShipScript.RShipCore.Pipes
             }
         }
 
+        [ScriptMember("connect")]
         public IEventConnection Connect(object callback)
         {
             return Pipe(callback);
         }
 
+        [ScriptMember("pipe")]
         public virtual IPipe Pipe(object output)
         {
             return Pipe(output, null);
         }
 
+        [ScriptMember("pipe")]
         public virtual IPipe Pipe(object output, object transformFunction)
         {
             var writableStream = output as IWritableStream ?? new CallbackPipeableStream(Evaluator, output);
@@ -59,6 +63,7 @@ namespace ShipScript.RShipCore.Pipes
             return pipe;
         }
 
+        [ScriptMember("getPipes")]
         [NativeObject("Array")]
         public object GetPipes()
         {
@@ -69,6 +74,7 @@ namespace ShipScript.RShipCore.Pipes
             }
         }
 
+        [ScriptMember("next")]
         [NativeObject("Promise")]
         public object ReadNext()
         {
