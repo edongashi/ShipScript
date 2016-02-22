@@ -113,7 +113,7 @@
     <Compile Include="Bootstrappers\StandardIO\StandardOutputStream.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ShipScript-Common\ShipScript.Common\ShipScript.Common.csproj">
+    <ProjectReference Include="..\ShipScript.Common\ShipScript.Common.csproj">
       <Project>{f15778fc-ffdf-4a74-85a7-1c835dd95377}</Project>
       <Name>ShipScript.Common</Name>
     </ProjectReference>
