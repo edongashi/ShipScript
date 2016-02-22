@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ShipScript.Common;
+﻿using ShipScript.Common;
 
 namespace ShipScript.RShipCore
 {
@@ -22,13 +21,16 @@ namespace ShipScript.RShipCore
 
         public Module Module { get; }
 
+        [ScriptMember("main")]
         public Module Main => Loader.MainModule;
 
+        [ScriptMember("invoke")]
         public Module Invoke(string id)
         {
             return Module.Require(id);
         }
 
+        [ScriptMember("resolve")]
         public string Resolve()
         {
             return Module.FileName;

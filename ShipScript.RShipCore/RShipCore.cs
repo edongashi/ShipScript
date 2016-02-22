@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using ShipScript.Common;
 using ShipScript.RShipCore.Compilers;
 using ShipScript.RShipCore.Extensions;
-using ShipScript.RShipCore.Helpers;
-using ShipScript.RShipCore.Pipes;
 
+[assembly: NoDefaultScriptAccess]
 namespace ShipScript.RShipCore
 {
-    public class RShipCore : ICommandReceiver
+    public partial class RShipCore
     {
         public static string CoreName => "RShipCore";
         public static string CoreVersion => "1.0.0";
@@ -21,17 +22,15 @@ namespace ShipScript.RShipCore
         public RShipCore(IScriptEngine engine, IModulePathResolver pathResolver, IModuleLoaderFactory loaderFactory)
         {
             this.engine = engine;
-            Evaluator = engine;
-            engine.DefaultAccess = ScriptAccess.None;
+            Engine = engine;
+            engine.DefaultAccess = ScriptAccess.Full;
             this.pathResolver = pathResolver;
             NativeModules = new Dictionary<string, Module>();
             Compilers = new Dictionary<string, IModuleCompiler>();
-            loader = loaderFactory.Create(Evaluator, NativeModules, Compilers, pathResolver);
+            loader = loaderFactory.Create(Engine, NativeModules, Compilers, pathResolver);
 
-            Console = new VirtualConsole.Console(null, Evaluator);
+            Console = new VirtualConsole.Console(null, Engine);
             StdOut = new StdOut.StdOut();
-
-            CommandPipe = new CommandPipe(this);
 
             Compilers[".ship"] = Compilers[".js"] = new ScriptCompiler();
             Compilers[".json"] = new JsonCompiler();
@@ -62,36 +61,7 @@ namespace ShipScript.RShipCore
 
         public Dictionary<string, IModuleCompiler> Compilers { get; }
 
-        public IScriptEvaluator Evaluator { get; }
-
-        [ModuleExports]
-        public VirtualConsole.Console Console { get; }
-
-        [ModuleExports]
-        public StdOut.StdOut StdOut { get; }
-
-        public CommandPipe CommandPipe { get; }
-
-        public bool ExecuteAsCommand { get; set; }
-
-        public bool Sleeping { get; private set; }
-
-        public bool FullAccess
-        {
-            get
-            {
-                return engine.DefaultAccess != ScriptAccess.None;
-            }
-            set
-            {
-                engine.DefaultAccess = value ? ScriptAccess.Full : ScriptAccess.None;
-            }
-        }
-
-        public object Require(string request)
-        {
-            return coreModule.Require(request).Exports;
-        }
+        public IScriptEngine Engine { get; }
 
         public Module Run(string request)
         {
@@ -113,6 +83,38 @@ namespace ShipScript.RShipCore
             }
         }
 
+        #region Native Modules
+
+        [ModuleExports]
+        public VirtualConsole.Console Console { get; }
+
+        [ModuleExports]
+        public StdOut.StdOut StdOut { get; }
+
+        #endregion
+        
+        [ScriptMember("sleeping")]
+        public bool Sleeping { get; private set; }
+
+        [ScriptMember("all")]
+        public bool FullAccess
+        {
+            get
+            {
+                return engine.DefaultAccess != ScriptAccess.None;
+            }
+            set
+            {
+                engine.DefaultAccess = value ? ScriptAccess.Full : ScriptAccess.None;
+            }
+        }
+
+        public object Require(string request)
+        {
+            return coreModule.Require(request).Exports;
+        }
+
+        [ScriptMember("addNativeModule")]
         public void AddNativeModule(string name, object exports)
         {
             if (NativeModules.ContainsKey(name))
@@ -123,51 +125,15 @@ namespace ShipScript.RShipCore
             NativeModules[name] = new NativeModule(name, loader, exports);
         }
 
+        [ScriptMember("exposeRequire")]
         public object ExposeGlobalRequire()
         {
             return engine.Script.require = coreModule.RequireFunction.GetScriptObject();
         }
 
-        public void ExecuteCommand(string command)
-        {
-            Console.WriteCommand(command);
-            try
-            {
-                object result;
-                if (ExecuteAsCommand)
-                {
-                    result = engine.ExecuteCommand(command);
-                }
-                else
-                {
-                    #warning Concurrency issue
-                    engine.Script.EngineInternal.command = command;
-                    result = engine.Evaluate("Command", "eval(EngineInternal.command)");
-                }
+        public void Execute(string code) => ExecuteWrapped(code);
 
-                Console.WriteResult(result);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteErr(ex.GetScriptStack());
-            }
-        }
-
-        public bool ScriptEvaluate()
-        {
-            try
-            {
-                engine.Execute("eval", @"EngineInternal.evalResult = eval(EngineInternal.evalCode)");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                engine.Script.EngineInternal.evalError = ex.GetScriptStack();
-                return false;
-            }
-        }
-
-        public void Sleep() => Sleeping = true;
+        public string ExecuteCommand(string command) => Engine.ExecuteCommand(command);
 
         private void ExecuteWrapped(string code)
         {
