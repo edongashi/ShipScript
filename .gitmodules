@@ -1,0 +1,3 @@
+[submodule "src/ClearScript-Ship"]
+	path = src/ClearScript-Ship
+	url = https://github.com/EdonGashi/ClearScript-Ship.git
