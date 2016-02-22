@@ -92,17 +92,16 @@ function printObject(obj, parent) {
     return true;
 }
 
-function explore(obj) {
+function explore(obj, evalGetters) {
     const printed = printSimple(obj, true);
     if (printed) {
         stdout.writeln();
         return;
     }
 
-    var len;
     if (obj instanceof Array) {
         let cut = false;
-        len = obj.length - 1;
+        let len = obj.length - 1;
         if (len === -1) {
             stdout.writeln('[]');
             return;
@@ -133,36 +132,46 @@ function explore(obj) {
 
     printObject(obj);
     stdout.write(' {');
-    const properties = [];
+    var properties;
     if (obj.hasOwnProperty(nativeProp)) {
-        // ReSharper disable once MissingHasOwnPropertyInForeach
-        for (let key in obj) {
+        properties = [];
+        const keys = Object.keys(obj);
+        const keysLength = keys.length;
+        for (let i = 0; i < keysLength; i++) {
+            let key = keys[i];
             if (key === 'ToString' || key === 'GetHashCode' || key === 'GetType' || key === 'Equals') {
                 continue;
             }
             properties.push(key);
         }
     } else {
-        // ReSharper disable once MissingHasOwnPropertyInForeach
-        for (let key in obj) {
-            properties.push(key);
-        }
+        properties = Object.keys(obj);
     }
 
-    len = properties.length;
-    const commas = len - 1;
-    if (len === 0) {
+    const propertiesLength = properties.length;
+    const commas = propertiesLength - 1;
+    if (propertiesLength === 0) {
         stdout.writeln('}');
         return;
     }
 
     stdout.writeln();
-    for (let i = 0; i < len; i++) {
+    for (let i = 0; i < propertiesLength; i++) {
         let key = properties[i];
         stdout.write(`  ${key}: `);
         try {
-            const val = obj[key];
-            printSimple(val) || printObject(val, obj);
+            const descriptor = Object.getOwnPropertyDescriptor(obj, key);
+            if (descriptor.get) {
+                if (evalGetters) {
+                    const val = descriptor.get();
+                    printSimple(val) || printObject(val, obj);
+                } else {
+                    stdout.write('[Getter]', color.dcyan);
+                }
+            } else {
+                const val = descriptor.value;
+                printSimple(val) || printObject(val, obj);
+            }
         }
         catch (err) {
             stdout.write('[Error]', color.dred);
