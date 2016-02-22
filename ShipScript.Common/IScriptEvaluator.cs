@@ -9,9 +9,5 @@
         object Evaluate(string code);
 
         object Evaluate(string documentName, string code);
-
-        bool IsUndefined(object value);
-
-        bool IsVoidResult(object value);
     }
 }
