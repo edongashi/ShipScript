@@ -50,8 +50,12 @@ namespace ShipScript.RShipCore.Bootstrappers
 
             if (core.Sleeping)
             {
-                core.ExposeGlobalRequire();
-                engine.Execute("require('repl').hook(require('stdin'))");
+                if (core.ReplOnSleep)
+                {
+                    core.ExposeGlobalRequire();
+                    engine.Execute("require('repl').hook(require('stdin'))");
+                }
+
                 stdin.Run();
             }
 

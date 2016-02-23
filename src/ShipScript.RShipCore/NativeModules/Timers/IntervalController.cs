@@ -1,5 +1,7 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using ShipScript.Common;
+using ShipScript.RShipCore.Extensions;
 
 namespace ShipScript.RShipCore.Timers
 {
@@ -40,7 +42,17 @@ namespace ShipScript.RShipCore.Timers
                 return;
             }
 
-            ((dynamic)Callback)();
+            try
+            {
+                ((dynamic) Callback)();
+            }
+            catch
+            {
+                Timer.Dispose();
+                disposed = true;
+                throw;
+            }
+
             if (Interval == Timeout.Infinite)
             {
                 Timer.Dispose();

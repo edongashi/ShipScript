@@ -38,7 +38,7 @@ namespace ShipScript.RShipCore
             NativeModules["console"] = new NativeModule("console", loader, Console);
             NativeModules["stdout"] = new NativeModule("stdout", loader, StdOut);
             NativeModules["cast"] = new NativeModule("cast", loader, new TypeCasts());
-            NativeModules["timer"] = new NativeModule("timer", loader, new TimerController());
+            NativeModules["timer"] = new NativeModule("timer", loader, new TimerController(Console.ErrStream));
             NativeModules["host"] = new NativeModule("host", loader, engine.CreateHostFunctions());
             NativeModules["xhost"] = new NativeModule("xhost", loader, engine.CreateExtendedHostFunctions());
 
@@ -96,6 +96,9 @@ namespace ShipScript.RShipCore
         
         [ScriptMember("sleeping")]
         public bool Sleeping { get; private set; }
+
+        [ScriptMember("replOnSleep")]
+        public bool ReplOnSleep { get; private set; }
 
         [ScriptMember("all")]
         public bool FullAccess

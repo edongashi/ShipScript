@@ -1,11 +1,21 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using ShipScript.Common;
+using ShipScript.RShipCore.Extensions;
+using ShipScript.RShipCore.Pipes;
 
 namespace ShipScript.RShipCore.Timers
 {
     [ModuleExports]
     public class TimerController
     {
+        private readonly IWritableStream errorStream;
+
+        public TimerController(IWritableStream errorStream)
+        {
+            this.errorStream = errorStream;
+        }
+
         [ScriptMember("delay")]
         public void Delay(int milliseconds)
         {
@@ -37,7 +47,15 @@ namespace ShipScript.RShipCore.Timers
         private void TimerTick(object state)
         {
             var controller = (IntervalController)state;
-            controller.Tick();
+            try
+            {
+                controller.Tick();
+            }
+            catch (Exception ex)
+            {
+                var stack = ex.GetScriptStack();
+                errorStream?.Write(stack);
+            }
         }
     }
 }

@@ -24,6 +24,12 @@ namespace ShipScript.RShipCore
         }
 
         [ScriptMember("sleep")]
-        public void Sleep() => Sleeping = true;
+        public object Sleep(bool startRepl = true)
+        {
+            Sleeping = true;
+            ReplOnSleep = startRepl;
+            Module stdIn;
+            return NativeModules.TryGetValue("stdin", out stdIn) ? stdIn.Exports : null;
+        }
     }
 }
