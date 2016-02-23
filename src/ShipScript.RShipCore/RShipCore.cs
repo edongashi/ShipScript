@@ -32,11 +32,14 @@ namespace ShipScript.RShipCore
             Compilers[".json"] = new JsonCompiler();
             Compilers[".dll"] = new DllCompiler();
             coreModule = new NativeModule("core", loader, this);
+
             NativeModules["core"] = coreModule;
             NativeModules["console"] = new NativeModule("console", loader, Console);
             NativeModules["stdout"] = new NativeModule("stdout", loader, StdOut);
+            NativeModules["cast"] = new NativeModule("cast", loader, new TypeCasts());
             NativeModules["host"] = new NativeModule("host", loader, engine.CreateHostFunctions());
             NativeModules["xhost"] = new NativeModule("xhost", loader, engine.CreateExtendedHostFunctions());
+
             foreach (var script in ScriptModules.Scripts.Keys)
             {
                 NativeModules.Add(script, new ScriptModule(script, loader));

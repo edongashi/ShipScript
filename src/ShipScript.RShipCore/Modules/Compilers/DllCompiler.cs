@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using ShipScript.Common;
 
 namespace ShipScript.RShipCore.Compilers
 {
     public class DllCompiler : IModuleCompiler
     {
+        #region Static lookup
+
         public static Dictionary<Assembly, string> LookupPaths { get; }
 
         static DllCompiler()
@@ -56,6 +59,8 @@ namespace ShipScript.RShipCore.Compilers
             }
         }
 
+        #endregion
+
         public void Compile(Module module)
         {
             var path = module.VirtualPath;
@@ -70,7 +75,7 @@ namespace ShipScript.RShipCore.Compilers
                 if (method.ReturnType == typeof(void))
                 {
                     method.Invoke(null, null);
-                    module.Exports = new ReflectableAssembly(asm);
+                    module.Exports = new ReflectableAssembly(asm, module.Evaluator);
                 }
                 else
                 {
@@ -79,7 +84,7 @@ namespace ShipScript.RShipCore.Compilers
             }
             else
             {
-                module.Exports = new ReflectableAssembly(asm);
+                module.Exports = new ReflectableAssembly(asm, module.Evaluator);
             }
 
             module.Loaded = true;

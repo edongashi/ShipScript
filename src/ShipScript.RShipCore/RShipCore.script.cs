@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ShipScript.Common;
 using ShipScript.RShipCore.Extensions;
 
@@ -6,9 +7,6 @@ namespace ShipScript.RShipCore
 {
     public partial class RShipCore
     {
-        [ScriptMember("unwrap")]
-        public object Unwrap(object obj) => obj;
-
         [ScriptMember("eval")]
         public bool ScriptEvaluate()
         {

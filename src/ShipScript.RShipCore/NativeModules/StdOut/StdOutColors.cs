@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using ShipScript.Common;
+﻿using ShipScript.Common;
 
 namespace ShipScript.RShipCore.StdOut
 {

@@ -73,6 +73,10 @@
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Annotations\NativeObjectAttribute.cs" />
     <Compile Include="Helpers\ObjectHelpers.cs" />
+    <Compile Include="NativeModules\Timers\IntervalController.cs" />
+    <Compile Include="NativeModules\Timers\TimerController.cs" />
+    <Compile Include="NativeModules\Timers\TimerState.cs" />
+    <Compile Include="NativeModules\TypeCasts.cs" />
     <Compile Include="RShipCore.script.cs">
       <DependentUpon>RShipCore.cs</DependentUpon>
     </Compile>
