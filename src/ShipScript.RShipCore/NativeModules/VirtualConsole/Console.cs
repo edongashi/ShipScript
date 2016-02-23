@@ -24,6 +24,8 @@ namespace ShipScript.RShipCore.VirtualConsole
             ResultStream = new PipeableStream(evaluator);
         }
 
+        public event EventHandler Clearing;
+
         public IConsoleInput ConsoleReader { get; set; }
 
         [ScriptMember("dataStream")]
@@ -92,6 +94,12 @@ namespace ShipScript.RShipCore.VirtualConsole
         public void WriteResult(object value)
         {
             ResultStream.Write(value);
+        }
+
+        [ScriptMember("clear")]
+        public void Clear()
+        {
+            Clearing?.Invoke(this, EventArgs.Empty);
         }
     }
 }

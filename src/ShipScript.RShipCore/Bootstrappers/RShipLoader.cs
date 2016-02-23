@@ -100,6 +100,7 @@ namespace ShipScript.RShipCore.Bootstrappers
             console.CoreStream.Pipe(new StandardOutputStream(ConsoleColor.Cyan));
             console.LogStream.Pipe(new StandardOutputStream(ConsoleColor.White));
             console.ErrStream.Pipe(new StandardErrorStream(ConsoleColor.Red));
+            console.Clearing += (s, e) => Console.Clear();
         }
     }
 }
