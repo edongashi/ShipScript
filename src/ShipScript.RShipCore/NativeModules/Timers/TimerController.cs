@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using System.Threading.Tasks;
 using ShipScript.Common;
 
 namespace ShipScript.RShipCore.Timers
@@ -10,24 +9,35 @@ namespace ShipScript.RShipCore.Timers
         [ScriptMember("delay")]
         public void Delay(int milliseconds)
         {
-            Task.Delay(milliseconds).Wait();
+            Thread.Sleep(milliseconds);
         }
 
         [ScriptMember("setInterval")]
-        public void SetInterval(object callback, int milliseconds)
+        public IntervalController SetInterval(object callback, int milliseconds)
         {
-            var timer = new System.Threading.Timer(DynamicCallback, callback, milliseconds, Timeout.Infinite);
+            return InitTimer(callback, milliseconds, true);
         }
 
         [ScriptMember("setTimeout")]
-        public void SetTimeout(int milliseconds, object callback)
+        public IntervalController SetTimeout(object callback, int milliseconds)
         {
-            Task.Delay(milliseconds).Wait();
+            return InitTimer(callback, milliseconds, false);
         }
 
-        private void DynamicCallback(object callback)
+        private IntervalController InitTimer(object callback, int milliseconds, bool repeat)
         {
-            ((dynamic)callback)();
-        } 
+            var interval = repeat ? milliseconds : Timeout.Infinite;
+            var controller = new IntervalController(callback, interval);
+            var timer = new Timer(TimerTick, controller, Timeout.Infinite, Timeout.Infinite);
+            controller.Timer = timer;
+            timer.Change(milliseconds, Timeout.Infinite);
+            return controller;
+        }
+
+        private void TimerTick(object state)
+        {
+            var controller = (IntervalController)state;
+            controller.Tick();
+        }
     }
 }

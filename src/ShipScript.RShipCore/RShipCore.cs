@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using ShipScript.Common;
 using ShipScript.RShipCore.Compilers;
 using ShipScript.RShipCore.Extensions;
+using ShipScript.RShipCore.Timers;
 
 [assembly: NoDefaultScriptAccess]
 
@@ -37,6 +38,7 @@ namespace ShipScript.RShipCore
             NativeModules["console"] = new NativeModule("console", loader, Console);
             NativeModules["stdout"] = new NativeModule("stdout", loader, StdOut);
             NativeModules["cast"] = new NativeModule("cast", loader, new TypeCasts());
+            NativeModules["timer"] = new NativeModule("timer", loader, new TimerController());
             NativeModules["host"] = new NativeModule("host", loader, engine.CreateHostFunctions());
             NativeModules["xhost"] = new NativeModule("xhost", loader, engine.CreateExtendedHostFunctions());
 
