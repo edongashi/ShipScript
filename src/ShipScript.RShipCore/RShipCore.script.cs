@@ -20,6 +20,7 @@ namespace ShipScript.RShipCore
             catch (Exception ex)
             {
                 engine.Script.EngineInternal.evalError = ex.GetScriptStack();
+                engine.Script.EngineInternal.lastError = ex;
                 return false;
             }
         }

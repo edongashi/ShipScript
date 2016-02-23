@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using ShipScript.Common;
 using ShipScript.RShipCore.Compilers;
 using ShipScript.RShipCore.Extensions;
 
 [assembly: NoDefaultScriptAccess]
+
 namespace ShipScript.RShipCore
 {
     public partial class RShipCore
     {
-        public static string CoreName => "RShipCore";
-        public static string CoreVersion => "1.0.0";
-
         private readonly IScriptEngine engine;
         private readonly IModuleLoader loader;
         private readonly IModulePathResolver pathResolver;

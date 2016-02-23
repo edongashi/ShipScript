@@ -8,10 +8,6 @@ namespace ShipScript.RShipCore.Bootstrappers
 {
     public class RShipLoader : IScriptEngineBootstrapper
     {
-        public string Name => RShipCore.CoreName;
-
-        public string Version => RShipCore.CoreVersion;
-
         public string Run(IScriptEngine engine, string[] args)
         {
             PrepareConsole();

@@ -50,12 +50,8 @@
     <Compile Include="ClearScript\ScriptMemberFlags.cs" />
     <Compile Include="ClearScript\Undefined.cs" />
     <Compile Include="ClearScript\VoidResult.cs" />
-    <Compile Include="CodeExecutionEventArgs.cs" />
-    <Compile Include="EngineExceptionEventArgs.cs" />
-    <Compile Include="ExecutionMethod.cs" />
     <Compile Include="IScriptEngineBootstrapper.cs" />
     <Compile Include="ClearScript\IScriptEngineException.cs" />
-    <Compile Include="IScriptEngineExtension.cs" />
     <Compile Include="IScriptEngine.cs" />
     <Compile Include="IScriptEvaluator.cs" />
     <Compile Include="ClearScript\NoDefaultScriptAccessAttribute.cs" />
