@@ -137,6 +137,7 @@ namespace ShipScript.RShipCore
 
         public void Execute(string code) => ExecuteWrapped(code);
 
+        [ScriptMember("executeCommand")]
         public string ExecuteCommand(string command) => Engine.ExecuteCommand(command);
 
         private void ExecuteWrapped(string code)

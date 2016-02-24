@@ -2,9 +2,17 @@
 // ReSharper disable UndeclaredGlobalVariableUsing
 const core = require('core');
 const console = require('console');
-const explore = require('explore');
+const stdout = require('stdout');
+var color = stdout.color;
+{
+    let copy = {};
+    Object.assign(copy, color);
+    color = copy;
+}
 
-function evaluate(command) {
+const stdoutExplore = require('explore').create(stdout, color);
+
+function evaluate(command, then, err) {
     if (typeof command !== 'string') {
         return;
     }
@@ -13,16 +21,21 @@ function evaluate(command) {
     const success = core.eval();
     EngineInternal.evalCode = undefined;
     if (success) {
-        explore(EngineInternal.evalResult);
+        then(EngineInternal.evalResult);
         EngineInternal.evalResult = undefined;
     } else {
-        console.err(EngineInternal.evalError);
+        err(EngineInternal.evalError);
         EngineInternal.evalError = undefined;
     }
 }
 
+function stdoutEvaluate(command) {
+    evaluate(command, stdoutExplore, console.err);
+}
+
 function hook(stream) {
-    return stream.pipe(evaluate);
+    return stream.pipe(stdoutEvaluate);
 }
 
 exports.hook = hook;
+exports.evaluate = evaluate;

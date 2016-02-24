@@ -127,6 +127,7 @@
   <ItemGroup>
     <Content Include="NativeModules\explore.js" />
     <Content Include="NativeModules\repl.js" />
+    <Content Include="NativeModules\StringWriter.js" />
     <Content Include="ScriptModules.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ScriptModules.cs</LastGenOutput>
