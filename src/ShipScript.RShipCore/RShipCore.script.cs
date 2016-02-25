@@ -11,7 +11,7 @@ namespace ShipScript.RShipCore
         {
             try
             {
-                engine.Execute("eval", @"EngineInternal.evalResult = eval(EngineInternal.evalCode)");
+                engine.Execute("coreEval", @"EngineInternal.evalResult = eval(EngineInternal.evalCode)");
                 return true;
             }
             catch (Exception ex)
