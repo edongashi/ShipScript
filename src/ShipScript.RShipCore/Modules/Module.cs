@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using ShipScript.Common;
+using Microsoft.ClearScript;
+using Microsoft.ClearScript.V8;
 using ShipScript.RShipCore.NativeTypes;
 
 namespace ShipScript.RShipCore
@@ -19,7 +20,7 @@ namespace ShipScript.RShipCore
             RequireFunction = new RequireFunction(Evaluator, loader, this);
         }
 
-        public IScriptEvaluator Evaluator { get; }
+        public V8ScriptEngine Evaluator { get; }
 
         [ScriptMember("id")]
         public string Id { get; }

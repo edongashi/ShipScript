@@ -90,14 +90,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClearScript-Ship\ClearScript\ClearScript.csproj">
-      <Project>{d2382d2c-6576-4d96-b6cd-057c4f6bed96}</Project>
-      <Name>ClearScript</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ShipScript.Common\ShipScript.Common.csproj">
-      <Project>{f15778fc-ffdf-4a74-85a7-1c835dd95377}</Project>
-      <Name>ShipScript.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ShipScript.RShipCore\ShipScript.RShipCore.csproj">
       <Project>{2f3dc5e4-8132-4c97-a779-b0639677fc35}</Project>
       <Name>ShipScript.RShipCore</Name>

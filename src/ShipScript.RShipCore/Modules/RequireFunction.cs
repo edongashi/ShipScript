@@ -1,16 +1,17 @@
-﻿using ShipScript.Common;
+﻿using Microsoft.ClearScript;
+using Microsoft.ClearScript.V8;
 
 namespace ShipScript.RShipCore
 {
     [NativeObject("Function")]
     public class RequireFunction : IScriptNativeObject
     {
-        private readonly IScriptEvaluator scriptEvaluator;
+        private readonly V8ScriptEngine scriptEvaluator;
 
         private object function;
         private bool loaded;
 
-        public RequireFunction(IScriptEvaluator scriptEvaluator, IModuleLoader loader, Module module)
+        public RequireFunction(V8ScriptEngine scriptEvaluator, IModuleLoader loader, Module module)
         {
             this.scriptEvaluator = scriptEvaluator;
             Loader = loader;

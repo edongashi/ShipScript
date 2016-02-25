@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using ShipScript.Common;
+using Microsoft.ClearScript;
+using Microsoft.ClearScript.V8;
 
 namespace ShipScript.RShipCore
 {
     public class ReflectableAssembly : IReflectable
     {
-        private readonly IScriptEvaluator evaluator;
+        private readonly V8ScriptEngine evaluator;
 
-        public ReflectableAssembly(Assembly assembly, IScriptEvaluator evaluator)
+        public ReflectableAssembly(Assembly assembly, V8ScriptEngine evaluator)
         {
             this.evaluator = evaluator;
             Assembly = assembly;
         }
-        
+
         [ScriptMember("assembly", ScriptAccess.ReadOnly)]
         public Assembly Assembly { get; }
 

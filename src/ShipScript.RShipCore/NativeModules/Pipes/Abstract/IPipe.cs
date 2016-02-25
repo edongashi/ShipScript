@@ -1,5 +1,4 @@
-﻿using System;
-using ShipScript.Common;
+﻿using Microsoft.ClearScript;
 
 namespace ShipScript.RShipCore.Pipes
 {

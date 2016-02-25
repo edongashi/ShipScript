@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using ShipScript.Common;
+using Microsoft.ClearScript;
+using Microsoft.ClearScript.V8;
 using ShipScript.RShipCore.Compilers;
 using ShipScript.RShipCore.Extensions;
 using ShipScript.RShipCore.Timers;
@@ -11,16 +12,20 @@ namespace ShipScript.RShipCore
 {
     public partial class RShipCore
     {
-        private readonly IScriptEngine engine;
+        private readonly V8ScriptEngine engine;
         private readonly IModuleLoader loader;
         private readonly IModulePathResolver pathResolver;
         private readonly NativeModule coreModule;
 
-        public RShipCore(IScriptEngine engine, IModulePathResolver pathResolver, IModuleLoaderFactory loaderFactory)
+        public RShipCore(IModulePathResolver pathResolver, IModuleLoaderFactory loaderFactory)
         {
-            this.engine = engine;
+            engine = new V8ScriptEngine
+            {
+                DefaultAccess = ScriptAccess.Full,
+                AllowReflection = true
+            };
+
             Engine = engine;
-            engine.DefaultAccess = ScriptAccess.Full;
             this.pathResolver = pathResolver;
             NativeModules = new Dictionary<string, Module>();
             Compilers = new Dictionary<string, IModuleCompiler>();
@@ -39,8 +44,8 @@ namespace ShipScript.RShipCore
             NativeModules["stdout"] = new NativeModule("stdout", loader, StdOut);
             NativeModules["cast"] = new NativeModule("cast", loader, new TypeCasts());
             NativeModules["timer"] = new NativeModule("timer", loader, new TimerController(Console.ErrStream));
-            NativeModules["host"] = new NativeModule("host", loader, engine.CreateHostFunctions());
-            NativeModules["xhost"] = new NativeModule("xhost", loader, engine.CreateExtendedHostFunctions());
+            NativeModules["host"] = new NativeModule("host", loader, new HostFunctions());
+            NativeModules["xhost"] = new NativeModule("xhost", loader, new ExtendedHostFunctions());
 
             foreach (var script in ScriptModules.Scripts.Keys)
             {
@@ -62,7 +67,7 @@ namespace ShipScript.RShipCore
 
         public Dictionary<string, IModuleCompiler> Compilers { get; }
 
-        public IScriptEngine Engine { get; }
+        public V8ScriptEngine Engine { get; }
 
         public Module Run(string request)
         {
@@ -93,7 +98,7 @@ namespace ShipScript.RShipCore
         public StdOut.StdOut StdOut { get; }
 
         #endregion
-        
+
         [ScriptMember("sleeping")]
         public bool Sleeping { get; private set; }
 
@@ -103,14 +108,8 @@ namespace ShipScript.RShipCore
         [ScriptMember("all")]
         public bool FullAccess
         {
-            get
-            {
-                return engine.DefaultAccess != ScriptAccess.None;
-            }
-            set
-            {
-                engine.DefaultAccess = value ? ScriptAccess.Full : ScriptAccess.None;
-            }
+            get { return engine.DefaultAccess != ScriptAccess.None; }
+            set { engine.DefaultAccess = value ? ScriptAccess.Full : ScriptAccess.None; }
         }
 
         public object Require(string request)

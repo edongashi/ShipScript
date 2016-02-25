@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using ShipScript.Common;
+using Microsoft.ClearScript;
+using Microsoft.ClearScript.V8;
 using ShipScript.RShipCore.Pipes;
 using ShipScript.RShipCore.Pipes.TransferModel;
 
@@ -9,9 +9,9 @@ namespace ShipScript.RShipCore.VirtualConsole
     [ModuleExports]
     public class Console : ICompositeStream<IPipeableStream>
     {
-        private readonly IScriptEvaluator evaluator;
+        private readonly V8ScriptEngine evaluator;
 
-        public Console(IConsoleInput consoleReader, IScriptEvaluator evaluator)
+        public Console(IConsoleInput consoleReader, V8ScriptEngine evaluator)
         {
             this.evaluator = evaluator;
             ConsoleReader = consoleReader;
@@ -30,16 +30,22 @@ namespace ShipScript.RShipCore.VirtualConsole
 
         [ScriptMember("dataStream")]
         public IPipeableStream DataStream { get; }
+
         [ScriptMember("altStream")]
         public IPipeableStream AltStream { get; }
+
         [ScriptMember("logStream")]
         public IPipeableStream LogStream { get; }
+
         [ScriptMember("errStream")]
         public IPipeableStream ErrStream { get; }
+
         [ScriptMember("coreStream")]
         public IPipeableStream CoreStream { get; }
+
         [ScriptMember("commandStream")]
         public IPipeableStream CommandStream { get; }
+
         [ScriptMember("resultStream")]
         public IPipeableStream ResultStream { get; }
 

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ShipScript.Common;
+using Microsoft.ClearScript;
 
 namespace ShipScript.RShipCore.Pipes
 {

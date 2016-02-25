@@ -1,11 +1,11 @@
 ﻿using System;
-using ShipScript.Common;
+using Microsoft.ClearScript.V8;
 
 namespace ShipScript.RShipCore.Pipes
 {
     public class CallbackPipeableStream : PipeableStream
     {
-        public CallbackPipeableStream(IScriptEvaluator evaluator, object callback)
+        public CallbackPipeableStream(V8ScriptEngine evaluator, object callback)
             : base(evaluator)
         {
             if (callback == null)

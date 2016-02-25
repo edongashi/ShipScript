@@ -1,4 +1,4 @@
-﻿using ShipScript.Common;
+﻿using Microsoft.ClearScript;
 
 namespace ShipScript.RShipCore.StdOut
 {
@@ -10,7 +10,6 @@ namespace ShipScript.RShipCore.StdOut
     {
         public StdOut()
         {
-            
         }
 
         public StdOut(IStdOutWriter writer)

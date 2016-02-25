@@ -1,17 +1,11 @@
-﻿using Microsoft.ClearScript.V8;
-
-namespace ShipScript.Launcher
+﻿namespace ShipScript.Launcher
 {
     public class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            var engine = new V8ScriptEngine(V8ScriptEngineFlags.DisableGlobalMembers)
-            {
-                AllowReflection = true,
-            };
             var bootstrapper = new RShipCore.Bootstrappers.RShipLoader();
-            bootstrapper.Run(engine, args);
+            bootstrapper.Run(args);
         }
     }
 }

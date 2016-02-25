@@ -7,7 +7,8 @@ namespace ShipScript.RShipCore.Helpers
 {
     public static class ObjectHelpers
     {
-        private static readonly CSharpArgumentInfo ArgInfo = CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, null);
+        private static readonly CSharpArgumentInfo ArgInfo = CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None,
+            null);
 
         public static object DynamicInvoke(object target, params object[] args)
         {
@@ -25,7 +26,7 @@ namespace ShipScript.RShipCore.Helpers
 
             object result;
             var binder = Binder.Invoke(CSharpBinderFlags.None, null, Enumerable.Repeat(ArgInfo, args.Length));
-            if (dynamicObject.TryInvoke((InvokeBinder) binder, args, out result))
+            if (dynamicObject.TryInvoke((InvokeBinder)binder, args, out result))
             {
                 return result;
             }

@@ -1,5 +1,4 @@
-﻿using ShipScript.Common;
-using ShipScript.RShipCore.NativeTypes;
+﻿using Microsoft.ClearScript;
 
 namespace ShipScript.RShipCore.Extensions
 {

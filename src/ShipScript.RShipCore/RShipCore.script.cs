@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Threading.Tasks;
-using ShipScript.Common;
+using Microsoft.ClearScript;
 using ShipScript.RShipCore.Extensions;
 
 namespace ShipScript.RShipCore

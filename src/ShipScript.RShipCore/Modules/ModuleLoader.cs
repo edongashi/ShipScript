@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using ShipScript.Common;
+using Microsoft.ClearScript.V8;
 
 namespace ShipScript.RShipCore
 {
@@ -8,7 +8,7 @@ namespace ShipScript.RShipCore
     {
         private Module mainModule;
 
-        public ModuleLoader(IScriptEvaluator evaluator,
+        public ModuleLoader(V8ScriptEngine evaluator,
             Dictionary<string, Module> nativeModules,
             Dictionary<string, IModuleCompiler> compilers,
             IModulePathResolver pathResolver)
@@ -20,7 +20,7 @@ namespace ShipScript.RShipCore
             PathResolver = pathResolver;
         }
 
-        public IScriptEvaluator Evaluator { get; }
+        public V8ScriptEngine Evaluator { get; }
 
         public Dictionary<string, Module> NativeModules { get; }
 

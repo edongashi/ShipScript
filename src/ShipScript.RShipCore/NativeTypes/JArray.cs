@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ShipScript.Common;
+using Microsoft.ClearScript.V8;
 
 namespace ShipScript.RShipCore.NativeTypes
 {
@@ -8,12 +8,12 @@ namespace ShipScript.RShipCore.NativeTypes
     {
         private readonly object array;
 
-        public JArray(IScriptEvaluator evaluator)
-            : this (evaluator, null)
+        public JArray(V8ScriptEngine evaluator)
+            : this(evaluator, null)
         {
         }
 
-        public JArray(IScriptEvaluator evaluator, IEnumerable<object> items)
+        public JArray(V8ScriptEngine evaluator, IEnumerable<object> items)
         {
             dynamic scriptObject = evaluator.Evaluate("[]");
             if (items == null)
