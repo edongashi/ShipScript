@@ -90,7 +90,7 @@ console.log('2 + 3 = ' + sum);
 require('core').sleep();
 ```
 MyLibrary.dll in the same directory as main.ship containing this class:
-```c#
+```cs
 namespace MyLibrary.MyBusinessLogic
 {
     public class MyClass
