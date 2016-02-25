@@ -74,6 +74,7 @@ data.json in the same folder as main.js
 ### Example 3
 main.ship launched from ship.exe
 ```javascript
+var console = require('console');
 var myLib = require('./MyLibrary.dll');
 var name = 'ShipScript';
 var myClrObject = myLib.create('MyLibrary.MyBusinessLogic.MyClass', /* constructor parameters */ name);

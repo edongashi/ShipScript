@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ShipScript.RShipCore
+﻿namespace ShipScript.RShipCore
 {
     public class NativeModule : Module
     {

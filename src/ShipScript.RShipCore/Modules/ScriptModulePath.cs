@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using ShipScript.RShipCore.Helpers;
+﻿using ShipScript.RShipCore.Helpers;
 
 namespace ShipScript.RShipCore
 {
