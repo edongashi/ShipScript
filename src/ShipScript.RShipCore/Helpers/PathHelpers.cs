@@ -14,7 +14,8 @@ namespace ShipScript.RShipCore.Helpers
         public static string GetAssemblyDirectory()
         {
             // ReSharper disable once AssignNullToNotNullAttribute
-            return Path.GetFullPath(Path.GetDirectoryName((new Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath));
+            return
+                Path.GetFullPath(Path.GetDirectoryName((new Uri(Assembly.GetExecutingAssembly().CodeBase)).AbsolutePath));
         }
     }
 }

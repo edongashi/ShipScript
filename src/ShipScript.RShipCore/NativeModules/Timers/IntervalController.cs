@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading;
-using ShipScript.Common;
-using ShipScript.RShipCore.Extensions;
+﻿using System.Threading;
+using Microsoft.ClearScript;
 
 namespace ShipScript.RShipCore.Timers
 {
@@ -44,7 +42,7 @@ namespace ShipScript.RShipCore.Timers
 
             try
             {
-                ((dynamic) Callback)();
+                ((dynamic)Callback)();
             }
             catch
             {

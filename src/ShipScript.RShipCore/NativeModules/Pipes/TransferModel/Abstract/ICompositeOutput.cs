@@ -3,7 +3,7 @@
     public interface ICompositeOutput
     {
         IWritableStream DataOutput { get; }
-         
+
         IWritableStream AltOutput { get; }
 
         IWritableStream LogOutput { get; }

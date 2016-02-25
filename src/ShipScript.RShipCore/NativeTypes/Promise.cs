@@ -1,5 +1,5 @@
 ﻿using System;
-using ShipScript.Common;
+using Microsoft.ClearScript.V8;
 using ShipScript.RShipCore.Helpers;
 
 namespace ShipScript.RShipCore.NativeTypes
@@ -11,7 +11,7 @@ namespace ShipScript.RShipCore.NativeTypes
         private readonly object resolveCallback;
         private readonly object rejectCallback;
 
-        public Promise(IScriptEvaluator evaluator)
+        public Promise(V8ScriptEngine evaluator)
         {
             var bag = (dynamic)evaluator.Evaluate(@"
                 (function () {

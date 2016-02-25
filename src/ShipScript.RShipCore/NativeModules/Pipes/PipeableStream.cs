@@ -1,14 +1,15 @@
 ﻿using System;
-using ShipScript.Common;
+using Microsoft.ClearScript.V8;
 using ShipScript.RShipCore.Extensions;
 
 namespace ShipScript.RShipCore.Pipes
 {
     public class PipeableStream : BaseReadableStream, IPipeableStream
     {
-        public PipeableStream(IScriptEvaluator evaluator)
+        public PipeableStream(V8ScriptEngine evaluator)
             : base(evaluator)
-        { }
+        {
+        }
 
         public override IPipe Pipe(object output)
         {

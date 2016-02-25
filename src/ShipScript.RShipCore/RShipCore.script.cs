@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Threading.Tasks;
-using ShipScript.Common;
+using Microsoft.ClearScript;
 using ShipScript.RShipCore.Extensions;
 
 namespace ShipScript.RShipCore
@@ -12,7 +11,7 @@ namespace ShipScript.RShipCore
         {
             try
             {
-                engine.Execute("eval", @"EngineInternal.evalResult = eval(EngineInternal.evalCode)");
+                engine.Execute("coreEval", @"EngineInternal.evalResult = eval(EngineInternal.evalCode)");
                 return true;
             }
             catch (Exception ex)

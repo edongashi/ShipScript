@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using ShipScript.Common;
+using Microsoft.ClearScript.V8;
 
 namespace ShipScript.RShipCore
 {
     public interface IModuleLoader
     {
-        IScriptEvaluator Evaluator { get; }
+        V8ScriptEngine Evaluator { get; }
 
         Dictionary<string, Module> NativeModules { get; }
 
@@ -17,5 +17,4 @@ namespace ShipScript.RShipCore
 
         Module Load(string request, Module parent, bool isMain = false);
     }
-
 }

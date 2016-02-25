@@ -1,17 +1,17 @@
 ﻿using System;
-using ShipScript.Common;
-using ShipScript.RShipCore.Bootstrappers.StandardIO;
 using System.IO;
+using ShipScript.RShipCore.Bootstrappers.StandardIO;
 using ShipScript.RShipCore.Helpers;
 
 namespace ShipScript.RShipCore.Bootstrappers
 {
-    public class RShipLoader : IScriptEngineBootstrapper
+    public class RShipLoader
     {
-        public string Run(IScriptEngine engine, string[] args)
+        public string Run(string[] args)
         {
             PrepareConsole();
-            var core = CreateCore(engine);
+            var core = CreateCore();
+            var engine = core.Engine;
             var evaluator = core.Engine;
             var stdin = new StandardInputStream(evaluator, ConsoleColor.Green);
             core.AddNativeModule("stdin", stdin);
@@ -83,12 +83,12 @@ namespace ShipScript.RShipCore.Bootstrappers
             }
         }
 
-        private RShipCore CreateCore(IScriptEngine engine)
+        private RShipCore CreateCore()
         {
             var modulesPath = Path.Combine(PathHelpers.GetAssemblyDirectory(), "ship_modules");
             var pathResolver = new ModulePathResolver(modulesPath, new[] { ".ship", ".js", ".json", ".dll" }, "lib");
             var loaderFactory = new ModuleLoaderFactory();
-            var core = new RShipCore(engine, pathResolver, loaderFactory);
+            var core = new RShipCore(pathResolver, loaderFactory);
             return core;
         }
 

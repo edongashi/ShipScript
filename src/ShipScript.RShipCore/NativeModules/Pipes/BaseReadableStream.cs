@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ShipScript.Common;
+using Microsoft.ClearScript;
+using Microsoft.ClearScript.V8;
 using ShipScript.RShipCore.NativeTypes;
 
 namespace ShipScript.RShipCore.Pipes
@@ -15,9 +16,9 @@ namespace ShipScript.RShipCore.Pipes
         private readonly List<IPipe> pipes;
         private readonly List<Promise> promises;
 
-        protected readonly IScriptEvaluator Evaluator;
+        protected readonly V8ScriptEngine Evaluator;
 
-        protected BaseReadableStream(IScriptEvaluator evaluator)
+        protected BaseReadableStream(V8ScriptEngine evaluator)
         {
             Evaluator = evaluator;
             pipes = new List<IPipe>();

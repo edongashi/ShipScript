@@ -11,7 +11,7 @@ namespace ShipScript.RShipCore
         {
         }
 
-        public sealed override object Exports
+        public override sealed object Exports
         {
             get
             {

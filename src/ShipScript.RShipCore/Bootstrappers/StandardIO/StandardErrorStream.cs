@@ -1,5 +1,4 @@
 ﻿using System;
-using ShipScript.Common;
 using ShipScript.RShipCore.Extensions;
 using ShipScript.RShipCore.Pipes;
 
@@ -13,7 +12,7 @@ namespace ShipScript.RShipCore.Bootstrappers.StandardIO
         }
 
         public ConsoleColor Color { get; set; }
-        
+
         public void Write(object value)
         {
             var output = value.ToScriptString();

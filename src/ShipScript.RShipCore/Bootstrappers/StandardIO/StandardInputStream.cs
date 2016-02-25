@@ -1,5 +1,6 @@
 ﻿using System;
-using ShipScript.Common;
+using Microsoft.ClearScript;
+using Microsoft.ClearScript.V8;
 using ShipScript.RShipCore.Pipes;
 
 namespace ShipScript.RShipCore.Bootstrappers.StandardIO
@@ -8,7 +9,7 @@ namespace ShipScript.RShipCore.Bootstrappers.StandardIO
     {
         private readonly ConsoleColor decoratorColor;
 
-        public StandardInputStream(IScriptEvaluator evaluator, ConsoleColor decoratorColor)
+        public StandardInputStream(V8ScriptEngine evaluator, ConsoleColor decoratorColor)
             : base(evaluator)
         {
             this.decoratorColor = decoratorColor;
