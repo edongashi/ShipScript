@@ -6,7 +6,10 @@ namespace ShipScript.Launcher
     {
         static void Main(string[] args)
         {
-            var engine = new V8ScriptEngine { AllowReflection = true };
+            var engine = new V8ScriptEngine(V8ScriptEngineFlags.DisableGlobalMembers)
+            {
+                AllowReflection = true,
+            };
             var bootstrapper = new RShipCore.Bootstrappers.RShipLoader();
             bootstrapper.Run(engine, args);
         }
