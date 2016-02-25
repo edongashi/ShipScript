@@ -22,10 +22,10 @@ The second way of using ShipScript is to host it inside your own application. Th
 
 ---
 
-## How to build
-1. Read the ClearScript guide to building V8 and copy the libraries to output.
-2. Build > Transform All T4 Templates to make sure the latest scripts are used.
-3. Place launcher, core, V8 and ClearScript V8 in the same directory before launching.
+## How to build and run
+1. Build > Transform All T4 Templates to make sure the latest scripts are used before building.
+2. Build Launcher and RShipCore.
+3. Copy ClearScript and V8 libraries from RShipCore output to Launcher output.
 4. Optionally link .ship files to launcher (ship.exe) and/or setup a system variable for it.
 
 ---
