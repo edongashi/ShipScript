@@ -44,7 +44,7 @@ namespace ShipScript.RShipCore
                 return function;
             }
 
-            function = ((dynamic)scriptEvaluator.Evaluate("native", @"
+            function = ((dynamic)scriptEvaluator.Evaluate("native", false, @"
                 (function (nativeRequire) { 
                     function require(id) {
                         var module = nativeRequire.invoke(id);

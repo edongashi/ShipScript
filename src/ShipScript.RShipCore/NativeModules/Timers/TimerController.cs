@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.ClearScript;
 using ShipScript.RShipCore.Extensions;
 using ShipScript.RShipCore.Pipes;
@@ -32,6 +33,12 @@ namespace ShipScript.RShipCore.Timers
         public IntervalController SetTimeout(object callback, int milliseconds)
         {
             return InitTimer(callback, milliseconds, false);
+        }
+
+        [ScriptMember("setImmediate")]
+        public void SetImmediate(object callback)
+        {
+            Task.Run(() => ((dynamic)callback)());
         }
 
         private IntervalController InitTimer(object callback, int milliseconds, bool repeat)

@@ -1,7 +1,7 @@
 ## About
 ShipScript is a [ClearScript](http://clearscript.codeplex.com) based runtime inspired by Node.js. It supports dynamic module loading in the same manner as Node.js by using the require function.
 
-While ClearScript allows adding scripting from within .NET applications, the purpose of this framework is to allow script access to existing .NET libraries by pure JavaScript without any additional .NET code necessary. This means that you can require() .dll's and have access to their types in script.
+While ClearScript allows adding scripting from within .NET applications, the purpose of this framework is to allow script access to existing .NET libraries by pure JavaScript without any .NET code. This means that you can require() .dll's and have access to their types in script.
 
 ShipScript can be thought of as the synchronous version of Node.js, aimed at single user procedural applications with an easy way to bootstrap business-layer .NET components.
 
