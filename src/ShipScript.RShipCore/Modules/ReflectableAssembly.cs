@@ -33,32 +33,44 @@ namespace ShipScript.RShipCore
             return type;
         }
 
-        [ScriptMember("enum")]
-        [NativeObject("Object")]
+        [ScriptMember("getEnum")]
         public object GetEnum(string name)
         {
             var type = Assembly.GetType(name);
-            if (type.BaseType == typeof(Enum))
+            if (!type.IsEnum)
             {
-                var names = Enum.GetNames(type).ToList();
-                var count = names.Count - 1;
-                var json = "JSON.parse('{";
-                string key;
-                int val;
-                for (int i = 0; i < count; i++)
-                {
-                    key = names[i];
-                    val = (int)Enum.Parse(type, key);
-                    json += $"\"{key}\":{val},";
-                }
-
-                key = names[count];
-                val = (int)Enum.Parse(type, key);
-                json += $"\"{key}\":{val}}}')";
-                return evaluator.Evaluate(json);
+                throw new InvalidOperationException("Requested type is not an enum.");
             }
 
-            throw new InvalidOperationException("Requested type is not an enum.");
+            return new ExtendedHostFunctions().type(type);
+        }
+
+        [ScriptMember("getEnumNumeric")]
+        [NativeObject("Object")]
+        public object GetEnumNumeric(string name)
+        {
+            var type = Assembly.GetType(name);
+            if (!type.IsEnum)
+            {
+                throw new InvalidOperationException("Requested type is not an enum.");
+            }
+
+            var names = Enum.GetNames(type).ToList();
+            var count = names.Count - 1;
+            var json = "JSON.parse('{";
+            string key;
+            int val;
+            for (int i = 0; i < count; i++)
+            {
+                key = names[i];
+                val = (int)Enum.Parse(type, key);
+                json += $"\"{key}\":{val},";
+            }
+
+            key = names[count];
+            val = (int)Enum.Parse(type, key);
+            json += $"\"{key}\":{val}}}')";
+            return evaluator.Evaluate(json);
         }
     }
 }
