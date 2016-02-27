@@ -26,11 +26,11 @@ namespace ShipScript.RShipCore
             return Activator.CreateInstance(type, args);
         }
 
-        [ScriptMember("type")]
+        [ScriptMember("getType")]
         public object LoadType(string name, params object[] args)
         {
             var type = Assembly.GetType(name);
-            return type;
+            return new ExtendedHostFunctions().type(type);
         }
 
         [ScriptMember("getEnum")]

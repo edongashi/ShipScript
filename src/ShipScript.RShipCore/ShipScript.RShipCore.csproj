@@ -77,6 +77,7 @@
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Annotations\NativeObjectAttribute.cs" />
     <Compile Include="Helpers\ObjectHelpers.cs" />
+    <Compile Include="NativeModules\Await.cs" />
     <Compile Include="NativeModules\Timers\TimerController.cs" />
     <Compile Include="NativeModules\Timers\IntervalController.cs" />
     <Compile Include="NativeModules\TypeCasts.cs" />

@@ -143,6 +143,7 @@ function createExplore(output, color) {
         const propertiesLength = properties.length;
         const commas = propertiesLength - 1;
         if (propertiesLength === 0) {
+            output.writeln();
             return;
         }
 
