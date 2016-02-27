@@ -88,7 +88,7 @@ namespace ShipScript.RShipCore
 
             var func = evaluator.Evaluate("native", false, @"(
                 function (nativeAsync) {
-                    function async (task) { return nativeAsync.promise(task); }
+                    function async(task) { return nativeAsync.promise(task); }
                     async.wait = nativeAsync.wait.toFunction();
                     return async;
                 }).valueOf()");
