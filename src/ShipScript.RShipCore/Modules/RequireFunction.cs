@@ -26,9 +26,12 @@ namespace ShipScript.RShipCore
         public Module Main => Loader.MainModule;
 
         [ScriptMember("invoke")]
-        public Module Invoke(string id)
+        [NativeObjectHint]
+        public object Invoke(string id)
         {
-            return Module.Require(id);
+            var module = Module.Require(id);
+            var native = module.Exports as IScriptNativeObject;
+            return native?.GetScriptObject() ?? module.Exports;
         }
 
         [ScriptMember("resolve")]
@@ -44,11 +47,10 @@ namespace ShipScript.RShipCore
                 return function;
             }
 
-            function = ((dynamic)scriptEvaluator.Evaluate("native", false, @"
-                (function (nativeRequire) { 
+            function = ((dynamic)scriptEvaluator.Evaluate("native", false, @"(
+                function (nativeRequire) { 
                     function require(id) {
-                        var module = nativeRequire.invoke(id);
-                        return module.exports;
+                        return nativeRequire.invoke(id);
                     }
 
                     function resolve() { return nativeRequire.resolve(); }

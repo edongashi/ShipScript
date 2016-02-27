@@ -17,10 +17,16 @@ namespace ShipScript.RShipCore.Timers
             this.errorStream = errorStream;
         }
 
-        [ScriptMember("delay")]
-        public void Delay(int milliseconds)
+        [ScriptMember("block")]
+        public void Block(int milliseconds)
         {
             Thread.Sleep(milliseconds);
+        }
+
+        [ScriptMember("delay")]
+        public Task Delay(int milliseconds)
+        {
+            return Task.Delay(milliseconds);
         }
 
         [ScriptMember("setInterval")]

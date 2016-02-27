@@ -34,7 +34,9 @@ namespace ShipScript.RShipCore
             Console = new VirtualConsole.Console(null, Engine);
             StdOut = new StdOut.StdOut();
 
-            Compilers[".ship"] = Compilers[".js"] = new ScriptCompiler();
+            var scriptCompiler = new ScriptCompiler();
+            Compilers[".ship"] = scriptCompiler;
+            Compilers[".js"] = scriptCompiler;
             Compilers[".json"] = new JsonCompiler();
             Compilers[".dll"] = new DllCompiler();
             coreModule = new NativeModule("core", loader, this);
@@ -46,6 +48,7 @@ namespace ShipScript.RShipCore
             NativeModules["timer"] = new NativeModule("timer", loader, new TimerController(Console.ErrStream));
             NativeModules["host"] = new NativeModule("host", loader, new HostFunctions());
             NativeModules["xhost"] = new NativeModule("xhost", loader, new ExtendedHostFunctions());
+            NativeModules["async"] = new NativeModule("async", loader, new Async(engine));
 
             foreach (var script in ScriptModules.Scripts.Keys)
             {
@@ -112,9 +115,10 @@ namespace ShipScript.RShipCore
             set { engine.DefaultAccess = value ? ScriptAccess.Full : ScriptAccess.None; }
         }
 
+        [NativeObjectHint]
         public object Require(string request)
         {
-            return coreModule.Require(request).Exports;
+            return coreModule.RequireFunction.Invoke(request);
         }
 
         [ScriptMember("addNativeModule")]

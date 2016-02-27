@@ -16,6 +16,7 @@ The second way of using ShipScript is to host it inside your own application. Th
 * _function (exports, require, module, __filename, __dirname) { code }_ wrapper for script modules
 * Required assemblies can have their types instantiated from script using reflection and late-binding
 * Piping API to connect native components with script callbacks (similar to Node events)
+* Task and Task<T> to JavaScript Promises
 * Virtual console that can be piped to any output
 * Easy to embed core in any .NET application
 * Easy to add or replace native modules
