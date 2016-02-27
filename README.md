@@ -25,7 +25,7 @@ The second way of using ShipScript is to host it inside your own application. Th
 ## How to build and run
 1. Build > Transform All T4 Templates to make sure the latest scripts are used before building
 2. Build the solution
-3. Open ship.exe from \bin\[Debug|Release]
+3. Open ship.exe from /bin/[Debug|Release]
 4. Optionally link .ship files to launcher (ship.exe) and/or setup a system variable for it
 
 ---

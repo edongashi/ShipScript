@@ -124,7 +124,6 @@ function createExplore(output, color) {
         }
 
         printObject(obj);
-        output.write(' {');
         var properties;
         if (obj.hasOwnProperty(nativeProp)) {
             properties = [];
@@ -144,10 +143,10 @@ function createExplore(output, color) {
         const propertiesLength = properties.length;
         const commas = propertiesLength - 1;
         if (propertiesLength === 0) {
-            output.writeln('}');
             return;
         }
 
+        output.write(' {');
         output.writeln();
         for (let i = 0; i < propertiesLength; i++) {
             let key = properties[i];
