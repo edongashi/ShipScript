@@ -6,8 +6,7 @@ using Microsoft.ClearScript.V8;
 
 namespace ShipScript.RShipCore
 {
-    [Obsolete("Modules return HostTypeCollection by default")]
-    public class ReflectableAssembly : IReflectable
+    public class ReflectableAssembly
     {
         private readonly V8ScriptEngine evaluator;
 
@@ -19,7 +18,7 @@ namespace ShipScript.RShipCore
         
         public Assembly Assembly { get; }
         
-        [ScriptMember("getAssembly")]
+        [ScriptMember("root")]
         public object GetAssembly()
         {
             return new HostTypeCollection(Assembly);

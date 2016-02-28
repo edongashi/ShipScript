@@ -60,7 +60,6 @@
     <Compile Include="Modules\Abstract\IModuleLoader.cs" />
     <Compile Include="Modules\Abstract\IModuleLoaderFactory.cs" />
     <Compile Include="Modules\Abstract\IModulePathResolver.cs" />
-    <Compile Include="Modules\Abstract\IReflectable.cs" />
     <Compile Include="Modules\Abstract\IVirtualPath.cs" />
     <Compile Include="Modules\Compilers\DllCompiler.cs" />
     <Compile Include="Modules\Compilers\JsonCompiler.cs" />
