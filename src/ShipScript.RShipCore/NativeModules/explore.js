@@ -1,6 +1,7 @@
 ﻿'use strict';
 // ReSharper disable UndeclaredGlobalVariableUsing
 const nativeProp = '{c2cf47d3-916b-4a3f-be2a-6ff567425808}';
+const evalNative = true;
 
 function createExplore(output, color) {
     function printString(str, longString) {
@@ -125,7 +126,8 @@ function createExplore(output, color) {
 
         printObject(obj);
         var properties;
-        if (obj.hasOwnProperty(nativeProp)) {
+        const isNative = obj.hasOwnProperty(nativeProp);
+        if (isNative) {
             properties = [];
             const keys = Object.keys(obj);
             const keysLength = keys.length;
@@ -134,6 +136,7 @@ function createExplore(output, color) {
                 if (key === 'ToString' || key === 'GetHashCode' || key === 'GetType' || key === 'Equals') {
                     continue;
                 }
+
                 properties.push(key);
             }
         } else {
@@ -152,21 +155,25 @@ function createExplore(output, color) {
         for (let i = 0; i < propertiesLength; i++) {
             let key = properties[i];
             output.write(`  ${key}: `);
-            try {
-                const descriptor = Object.getOwnPropertyDescriptor(obj, key);
-                if (descriptor.get) {
-                    if (evalGetters) {
-                        const val = descriptor.get();
-                        printSimple(val) || printObject(val, obj);
+            if (isNative && !evalNative) {
+                output.write('[Native]', color.dmagenta);
+            } else {
+                try {
+                    const descriptor = Object.getOwnPropertyDescriptor(obj, key);
+                    if (descriptor.get) {
+                        if (evalGetters) {
+                            const val = descriptor.get();
+                            printSimple(val) || printObject(val, obj);
+                        } else {
+                            output.write('[Getter]', color.dcyan);
+                        }
                     } else {
-                        output.write('[Getter]', color.dcyan);
+                        const val = descriptor.value;
+                        printSimple(val) || printObject(val, obj);
                     }
-                } else {
-                    const val = descriptor.value;
-                    printSimple(val) || printObject(val, obj);
+                } catch (err) {
+                    output.write('[Error]', color.dred);
                 }
-            } catch (err) {
-                output.write('[Error]', color.dred);
             }
 
             if (i < commas) {
