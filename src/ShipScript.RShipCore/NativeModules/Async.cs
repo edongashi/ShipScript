@@ -71,7 +71,7 @@ namespace ShipScript.RShipCore
                 }
                 else
                 {
-                    promise.Resolve(new object[] { null });
+                    promise.Resolve();
                 }
             });
 

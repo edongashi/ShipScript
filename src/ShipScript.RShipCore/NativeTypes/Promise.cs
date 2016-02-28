@@ -44,7 +44,11 @@ namespace ShipScript.RShipCore.NativeTypes
                 throw new InvalidOperationException("Promise has already been settled");
             }
 
-            if (resolveCallback != null)
+            if (args == null || args.Length == 0)
+            {
+                ((dynamic)resolveCallback)();
+            }
+            else
             {
                 ObjectHelpers.DynamicInvoke(resolveCallback, args);
             }
