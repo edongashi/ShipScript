@@ -8,8 +8,8 @@ namespace ShipScript.RShipCore.NativeTypes
     public class Promise : IScriptNativeObject
     {
         private readonly object promise;
-        private readonly object resolveCallback;
-        private readonly object rejectCallback;
+        private object resolveCallback;
+        private object rejectCallback;
 
         public Promise(V8ScriptEngine evaluator)
         {
@@ -53,6 +53,9 @@ namespace ShipScript.RShipCore.NativeTypes
                 ObjectHelpers.DynamicInvoke(resolveCallback, args);
             }
 
+            // Release scipt object references
+            resolveCallback = null;
+            rejectCallback = null;
             Pending = false;
             Fulfilled = true;
         }
@@ -64,11 +67,9 @@ namespace ShipScript.RShipCore.NativeTypes
                 throw new InvalidOperationException("Promise has already been settled");
             }
 
-            if (rejectCallback != null)
-            {
-                ((dynamic)rejectCallback)(reason);
-            }
-
+            ((dynamic)rejectCallback)(reason);
+            resolveCallback = null;
+            rejectCallback = null;
             Pending = false;
             Rejected = true;
         }

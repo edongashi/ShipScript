@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Microsoft.ClearScript;
 
 namespace ShipScript.RShipCore.Compilers
 {
@@ -67,25 +68,7 @@ namespace ShipScript.RShipCore.Compilers
             var asm = Assembly.LoadFrom(file);
             var dir = path.ResolveDirectory();
             LookupPaths[asm] = dir;
-            var type = asm.GetType("ShipScript.Loader", false);
-            if (type != null)
-            {
-                var method = type.GetMethod("Load", BindingFlags.Static | BindingFlags.Public, null, Type.EmptyTypes, null);
-                if (method.ReturnType == typeof(void))
-                {
-                    method.Invoke(null, null);
-                    module.Exports = new ReflectableAssembly(asm, module.Evaluator);
-                }
-                else
-                {
-                    module.Exports = method.Invoke(null, null);
-                }
-            }
-            else
-            {
-                module.Exports = new ReflectableAssembly(asm, module.Evaluator);
-            }
-
+            module.Exports = new HostTypeCollection(asm);
             module.Loaded = true;
         }
     }

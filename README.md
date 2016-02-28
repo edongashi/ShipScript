@@ -14,7 +14,7 @@ The second way of using ShipScript is to host it inside your own application. Th
 * Standalone .exe launcher that runs supplied script files, with REPL support
 * Require .ship, .js, .json, and .dll (.NET) files, with support to add custom compilers
 * _function (exports, require, module, __filename, __dirname) { code }_ wrapper for script modules
-* Required assemblies can have their types instantiated from script using reflection and late-binding
+* Required assemblies can have their types imported and instantiated from script
 * Piping API to connect native components with script callbacks (similar to Node events)
 * TPL Task and Task(T) to JavaScript Promises conversion
 * Virtual console that can be piped to any output
@@ -76,11 +76,10 @@ data.json in the same folder as main.js
 main.ship launched from ship.exe
 ```javascript
 var console = require('console');
-var myLib = require('./MyLibrary.dll');
+var lib = require('./MyLibrary.dll');
 var name = 'ShipScript';
-var MyClass = myLib.getType('MyLibrary.MyBusinessLogic.MyClass');
-var myClrObject = new MyClass(name);
 
+var myClrObject = new lib.MyLibrary.MyBusinessLogic.MyClass(name);
 myClrObject.SayHello();
 myClrObject.Name = 'Clr Object';
 myClrObject.SayHello();
