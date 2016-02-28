@@ -19,7 +19,7 @@ namespace ShipScript.RShipCore
 
         public RShipCore(IModulePathResolver pathResolver, IModuleLoaderFactory loaderFactory)
         {
-            engine = new V8ScriptEngine
+            engine = new V8ScriptEngine(V8ScriptEngineFlags.DisableGlobalMembers)
             {
                 DefaultAccess = ScriptAccess.Full,
                 AllowReflection = true
