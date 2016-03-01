@@ -29,12 +29,23 @@ function evaluate(command, then, err) {
     }
 }
 
-function stdoutEvaluate(command) {
+var stdin;
+function stdinCommand(command) {
+    if (command === '.exit') {
+        if (typeof stdin.stop === 'function') {
+            stdin.stop();
+        }
+
+        return;
+    }
+
     evaluate(command, stdoutExplore, console.err);
 }
 
 function hook(stream) {
-    return stream.pipe(stdoutEvaluate);
+    const pipe = stream.pipe(stdinCommand);
+    stdin = pipe.source;
+    return pipe;
 }
 
 exports.hook = hook;

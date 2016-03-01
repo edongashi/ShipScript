@@ -4,7 +4,7 @@ namespace ShipScript.RShipCore.Pipes
 {
     public interface IPipe : IEventConnection
     {
-        [ScriptMember("source")]
+        [ScriptMember("source", ScriptMemberFlags.ExposeRuntimeType)]
         IReadableStream Source { get; }
 
         [ScriptMember("target", ScriptMemberFlags.ExposeRuntimeType)]
