@@ -43,9 +43,8 @@ function stdinCommand(command) {
 }
 
 function hook(stream) {
-    const pipe = stream.pipe(stdinCommand);
-    stdin = pipe.source;
-    return pipe;
+    stdin = stream;
+    return stream.pipe(stdinCommand);
 }
 
 exports.hook = hook;

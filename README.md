@@ -76,7 +76,7 @@ data.json in the same folder as main.js
 main.ship launched from ship.exe
 ```javascript
 var console = require('console');
-var lib = require('./MyLibrary.dll').root();
+var lib = require('./MyLibrary.dll');
 var name = 'ShipScript';
 
 var myClrObject = new lib.MyLibrary.MyBusinessLogic.MyClass(name);

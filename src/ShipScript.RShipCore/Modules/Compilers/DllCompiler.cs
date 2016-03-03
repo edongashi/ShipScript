@@ -68,7 +68,7 @@ namespace ShipScript.RShipCore.Compilers
             var asm = Assembly.LoadFrom(file);
             var dir = path.ResolveDirectory();
             LookupPaths[asm] = dir;
-            module.Exports = new ReflectableAssembly(asm, module.Evaluator);
+            module.Exports = new HostTypeCollection(asm);
             module.Loaded = true;
         }
     }
