@@ -49,3 +49,4 @@ function hook(stream) {
 
 exports.hook = hook;
 exports.evaluate = evaluate;
+exports.stdoutExplore = stdoutExplore;
