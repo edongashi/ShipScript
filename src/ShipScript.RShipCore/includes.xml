@@ -3,4 +3,5 @@
   <script name="explore" />
   <script name="repl" />
   <script name="StringWriter" />
+  <script name="clr" />
 </include>

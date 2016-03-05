@@ -122,6 +122,7 @@
     <Content Include="includes.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="NativeModules\clr.js" />
     <Content Include="NativeModules\explore.js" />
     <Content Include="NativeModules\repl.js" />
     <Content Include="NativeModules\StringWriter.js" />
