@@ -66,9 +66,9 @@ namespace ShipScript.RShipCore
 
         private string SearchFile(string file)
         {
-            if (Path.HasExtension(file))
+            if (File.Exists(file))
             {
-                return File.Exists(file) ? Path.GetFullPath(file) : null;
+                return Path.GetFullPath(file);
             }
 
             // ReSharper disable once LoopCanBeConvertedToQuery
