@@ -23,13 +23,13 @@ namespace ShipScript.RShipCore.Compilers
         {
             try
             {
-                var reqiestomgAssembly = args.RequestingAssembly;
+                var requestingAssembly = args.RequestingAssembly;
                 var requestedAssembly = new AssemblyName(args.Name);
                 var targetName = requestedAssembly.Name + ".dll";
                 FileInfo[] dlls;
                 string dll;
                 string directory;
-                if (reqiestomgAssembly == null || !LookupPaths.TryGetValue(args.RequestingAssembly, out directory))
+                if (requestingAssembly == null || !LookupPaths.TryGetValue(args.RequestingAssembly, out directory))
                 {
                     // ReSharper disable once LoopCanBeConvertedToQuery
                     foreach (var dir in LookupPaths.Values)
