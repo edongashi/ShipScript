@@ -22,6 +22,7 @@ namespace ShipScript.RShipCore
             engine = new V8ScriptEngine(V8ScriptEngineFlags.DisableGlobalMembers)
             {
                 DefaultAccess = ScriptAccess.Full,
+                SuppressExtensionMethodEnumeration = true,
                 AllowReflection = true
             };
 
