@@ -34,8 +34,7 @@ namespace ShipScript.RShipCore
             }
             else if (path.Length > 1)
             {
-                var start = path.Substring(0, 2);
-                if (start == "./" || start == "../")
+                if (path.StartsWith("./") || path.StartsWith("../"))
                 {
                     var parentDirectory = Path.GetDirectoryName(parent.FileName);
                     if (parentDirectory == null)

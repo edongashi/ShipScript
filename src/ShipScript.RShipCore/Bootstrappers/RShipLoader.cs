@@ -86,7 +86,7 @@ namespace ShipScript.RShipCore.Bootstrappers
         public RShipCore CreateCore()
         {
             var modulesPath = Path.Combine(PathHelpers.GetAssemblyDirectory(), "ship_modules");
-            var pathResolver = new ModulePathResolver(modulesPath, new[] { ".ship", ".js", ".json", ".dll" }, "lib");
+            var pathResolver = new ModulePathResolver(modulesPath, new[] { ".ship", ".js", ".json", ".dll" }, "index");
             var loaderFactory = new ModuleLoaderFactory();
             var core = new RShipCore(pathResolver, loaderFactory);
             return core;

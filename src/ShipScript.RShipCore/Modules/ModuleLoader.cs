@@ -106,5 +106,17 @@ namespace ShipScript.RShipCore
 
             return module;
         }
+
+        public string Resolve(string request, Module requester)
+        {
+            Module module;
+            if (NativeModules.TryGetValue(request, out module))
+            {
+                return module.FileName;
+            }
+
+            var virtualPath = PathResolver.Resolve(request, requester);
+            return virtualPath?.ResolvePath();
+        }
     }
 }

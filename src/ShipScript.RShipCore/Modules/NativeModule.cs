@@ -9,13 +9,12 @@
             Loaded = true;
         }
 
-        public override sealed object Exports
+        public sealed override object Exports
         {
             get
             {
                 return base.Exports;
             }
-
             set
             {
                 // ignored

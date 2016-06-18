@@ -35,9 +35,9 @@ namespace ShipScript.RShipCore
         }
 
         [ScriptMember("resolve")]
-        public string Resolve()
+        public string Resolve(string id)
         {
-            return Module.FileName;
+            return Loader.Resolve(id, Module);
         }
 
         public object GetScriptObject()
@@ -53,7 +53,7 @@ namespace ShipScript.RShipCore
                         return nativeRequire.invoke(id);
                     }
 
-                    function resolve() { return nativeRequire.resolve(); }
+                    function resolve(id) { return nativeRequire.resolve(id); }
                     Object.defineProperty(require, 'resolve', { value: resolve, enumerable: true  });
                     Object.defineProperty(require, 'main', { get: () => nativeRequire.main, enumerable: true });
 

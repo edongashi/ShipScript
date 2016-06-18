@@ -16,5 +16,7 @@ namespace ShipScript.RShipCore
         Module MainModule { get; set; }
 
         Module Load(string request, Module parent, bool isMain = false);
+
+        string Resolve(string request, Module requester);
     }
 }
