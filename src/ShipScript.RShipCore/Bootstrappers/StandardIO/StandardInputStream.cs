@@ -5,7 +5,7 @@ using ShipScript.RShipCore.Pipes;
 
 namespace ShipScript.RShipCore.Bootstrappers.StandardIO
 {
-    public class StandardInputStream : BaseReadableStream
+    public class StandardInputStream : ReadableStream
     {
         private readonly ConsoleColor decoratorColor;
 

@@ -105,7 +105,7 @@
     <Compile Include="NativeModules\VirtualConsole\Console.cs" />
     <Compile Include="NativeModules\Pipes\Pipe.cs" />
     <Compile Include="NativeModules\VirtualConsole\IConsoleInput.cs" />
-    <Compile Include="NativeModules\Pipes\BaseReadableStream.cs" />
+    <Compile Include="NativeModules\Pipes\ReadableStream.cs" />
     <Compile Include="NativeModules\Pipes\PipeBrokenException.cs" />
     <Compile Include="Bootstrappers\StandardIO\StandardInputReader.cs" />
     <Compile Include="NativeModules\Pipes\TransferModel\TransferChannel.cs" />

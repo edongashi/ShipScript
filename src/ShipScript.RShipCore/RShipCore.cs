@@ -4,18 +4,20 @@ using Microsoft.ClearScript;
 using Microsoft.ClearScript.V8;
 using ShipScript.RShipCore.Compilers;
 using ShipScript.RShipCore.Extensions;
+using ShipScript.RShipCore.Pipes;
 using ShipScript.RShipCore.Timers;
 
 [assembly: NoDefaultScriptAccess]
 
 namespace ShipScript.RShipCore
 {
-    public partial class RShipCore
+    public partial class RShipCore : IDisposable
     {
         private readonly V8ScriptEngine engine;
         private readonly IModuleLoader loader;
         private readonly IModulePathResolver pathResolver;
         private readonly NativeModule coreModule;
+        private readonly ReadableStream disposePipe;
 
         public RShipCore(IModulePathResolver pathResolver, IModuleLoaderFactory loaderFactory)
         {
@@ -65,6 +67,7 @@ namespace ShipScript.RShipCore
             ");
 
             Sleeping = true;
+            disposePipe = new PipeableStream(engine);
         }
 
         public Dictionary<string, Module> NativeModules { get; }
@@ -116,6 +119,12 @@ namespace ShipScript.RShipCore
             set { engine.DefaultAccess = value ? ScriptAccess.Full : ScriptAccess.None; }
         }
 
+        [ScriptMember("disposed")]
+        public bool Disposed { get; private set; }
+
+        [ScriptMember("onDispose")]
+        public IReadableStream DisposePipe => disposePipe;
+
         [NativeObjectHint]
         public object Require(string request)
         {
@@ -150,6 +159,17 @@ namespace ShipScript.RShipCore
                 (function () {{
                     {code}
                 }})()");
+        }
+
+        public void Dispose()
+        {
+            if (Disposed)
+            {
+                return;
+            }
+            
+            disposePipe.Write(null);
+            Disposed = true;
         }
     }
 }

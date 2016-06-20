@@ -59,6 +59,7 @@ namespace ShipScript.RShipCore.Bootstrappers
                 stdin.Run();
             }
 
+            core.Dispose();
             return null;
         }
 

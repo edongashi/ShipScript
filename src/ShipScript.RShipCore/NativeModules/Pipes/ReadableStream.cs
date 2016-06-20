@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.ClearScript;
 using Microsoft.ClearScript.V8;
@@ -6,7 +7,7 @@ using ShipScript.RShipCore.NativeTypes;
 
 namespace ShipScript.RShipCore.Pipes
 {
-    public abstract class BaseReadableStream : IReadableStream
+    public class ReadableStream : IReadableStream
     {
         private readonly object syncRoot = new object();
         private readonly object removeSyncRoot = new object();
@@ -18,7 +19,7 @@ namespace ShipScript.RShipCore.Pipes
 
         protected readonly V8ScriptEngine Evaluator;
 
-        protected BaseReadableStream(V8ScriptEngine evaluator)
+        public ReadableStream(V8ScriptEngine evaluator)
         {
             Evaluator = evaluator;
             pipes = new List<IPipe>();
@@ -40,20 +41,19 @@ namespace ShipScript.RShipCore.Pipes
         }
 
         [ScriptMember("connect")]
-        public IEventConnection Connect(object callback)
-        {
-            return Pipe(callback);
-        }
+        public IEventConnection Connect(object callback) => Pipe(callback);
 
         [ScriptMember("pipe")]
-        public virtual IPipe Pipe(object output)
-        {
-            return Pipe(output, null);
-        }
+        public IPipe Pipe(object output) => Pipe(output, null);
 
         [ScriptMember("pipe")]
         public virtual IPipe Pipe(object output, object transformFunction)
         {
+            if (output == this)
+            {
+                throw new InvalidOperationException("Cannot pipe object to itself.");
+            }
+
             var writableStream = output as IWritableStream ?? new CallbackPipeableStream(Evaluator, output);
             var pipe = new Pipe(this, writableStream, transformFunction, RemovePipe);
             lock (syncRoot)
@@ -87,7 +87,7 @@ namespace ShipScript.RShipCore.Pipes
             }
         }
 
-        protected void Write(object value)
+        public virtual void Write(object value)
         {
             lock (syncRoot)
             {
