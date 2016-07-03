@@ -17,6 +17,9 @@ namespace ShipScript.RShipCore
             this.evaluator = evaluator;
         }
 
+        [ScriptMember("complete")]
+        public Task CompletedTask => Task.CompletedTask;
+
         [ScriptMember("wait")]
         public T Wait<T>(Task<T> task)
         {
