@@ -58,6 +58,8 @@ namespace ShipScript.RShipCore
                 NativeModules.Add(script, new ScriptModule(script, loader));
             }
 
+            engine.Script.core = this;
+            engine.Script.console = Console;
             engine.Script.EngineInternal.isVoid = new Func<object, bool>(obj => obj is VoidResult);
             ExecuteWrapped(@"
                 Object.defineProperty(this, 'global', { value: this, enumerable: true });

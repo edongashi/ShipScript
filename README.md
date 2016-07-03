@@ -35,7 +35,6 @@ The second way of using ShipScript is to host it inside your own application. Th
 ### Example 1
 hello.js launched from ship.exe
 ```javascript
-var console = require('console');
 console.log('Hello world');
 
 // Just like a C# console app, we need to block with something to prevent closing
@@ -44,7 +43,6 @@ console.read();
 ### Example 2
 main.js launched from ship.exe
 ```javascript
-var console = require('console');
 var myLib = require('./library.js');
 
 var result = myLib.getResult();
@@ -54,7 +52,6 @@ console.log(result);
 global.result = result;
 
 // Instead of closing, we can start a REPL session on current application to inspect our application state
-var core = require('core');
 core.sleep(true);
 // If we pass false to sleep, an infinite read loop is started without REPL
 // so we can pipe the 'stdin' module to any custom handler or .stop() the loop
@@ -75,7 +72,6 @@ data.json in the same folder as main.js
 ### Example 3
 main.ship launched from ship.exe
 ```javascript
-var console = require('console');
 var lib = require('./MyLibrary.dll');
 var name = 'ShipScript';
 
@@ -88,7 +84,7 @@ var sum = myClrObject.AddNumbers(2, 3);
 console.log('2 + 3 = ' + sum);
 
 // Start REPL after module runs
-require('core').sleep();
+core.sleep();
 ```
 MyLibrary.dll in the same directory as main.ship containing this class:
 ```cs
