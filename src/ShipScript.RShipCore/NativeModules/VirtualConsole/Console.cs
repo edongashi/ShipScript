@@ -18,7 +18,7 @@ namespace ShipScript.RShipCore.VirtualConsole
             DataStream = new PipeableStream(evaluator);
             AltStream = new PipeableStream(evaluator);
             LogStream = new PipeableStream(evaluator);
-            ErrStream = new PipeableStream(evaluator);
+            ErrorStream = new PipeableStream(evaluator);
             CoreStream = new PipeableStream(evaluator);
             CommandStream = new PipeableStream(evaluator);
             ResultStream = new PipeableStream(evaluator);
@@ -37,8 +37,8 @@ namespace ShipScript.RShipCore.VirtualConsole
         [ScriptMember("logStream")]
         public IPipeableStream LogStream { get; }
 
-        [ScriptMember("errStream")]
-        public IPipeableStream ErrStream { get; }
+        [ScriptMember("errorStream")]
+        public IPipeableStream ErrorStream { get; }
 
         [ScriptMember("coreStream")]
         public IPipeableStream CoreStream { get; }
@@ -78,10 +78,10 @@ namespace ShipScript.RShipCore.VirtualConsole
             LogStream.Write(value);
         }
 
-        [ScriptMember("err")]
-        public void WriteErr(object value)
+        [ScriptMember("error")]
+        public void WriteError(object value)
         {
-            ErrStream.Write(value);
+            ErrorStream.Write(value);
         }
 
         [ScriptMember("core")]

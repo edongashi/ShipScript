@@ -48,7 +48,7 @@ namespace ShipScript.RShipCore
             NativeModules["console"] = new NativeModule("console", loader, Console);
             NativeModules["stdout"] = new NativeModule("stdout", loader, StdOut);
             NativeModules["cast"] = new NativeModule("cast", loader, new TypeCasts());
-            NativeModules["timer"] = new NativeModule("timer", loader, new TimerController(Console.ErrStream));
+            NativeModules["timer"] = new NativeModule("timer", loader, new TimerController(Console.ErrorStream));
             NativeModules["host"] = new NativeModule("host", loader, new HostFunctions());
             NativeModules["xhost"] = new NativeModule("xhost", loader, new ExtendedHostFunctions());
             NativeModules["async"] = new NativeModule("async", loader, new Async(engine));
@@ -92,7 +92,7 @@ namespace ShipScript.RShipCore
             }
             catch (Exception ex)
             {
-                Console.WriteErr(ex.GetScriptStack());
+                Console.WriteError(ex.GetScriptStack());
                 Sleeping = true;
                 throw;
             }

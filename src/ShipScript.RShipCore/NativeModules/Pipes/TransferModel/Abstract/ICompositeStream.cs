@@ -8,7 +8,7 @@
 
         TStream LogStream { get; }
 
-        TStream ErrStream { get; }
+        TStream ErrorStream { get; }
 
         TStream CoreStream { get; }
 
